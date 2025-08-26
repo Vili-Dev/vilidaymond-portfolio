@@ -1,10 +1,14 @@
+import { lazy } from 'react';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
-import AboutSection from '@/components/AboutSection';
-import PortfolioSection from '@/components/PortfolioSection';
-import ContactSection from '@/components/ContactSection';
-import Footer from '@/components/Footer';
 import ParticleSystem from '@/components/ParticleSystem';
+import LazySection from '@/components/LazySection';
+
+// Lazy load sections that are below the fold
+const AboutSection = lazy(() => import('@/components/AboutSection'));
+const PortfolioSection = lazy(() => import('@/components/PortfolioSection'));
+const ContactSection = lazy(() => import('@/components/ContactSection'));
+const Footer = lazy(() => import('@/components/Footer'));
 
 export default function Home() {
   return (
@@ -12,10 +16,22 @@ export default function Home() {
       <ParticleSystem particleCount={75} />
       <Navigation />
       <HeroSection />
-      <AboutSection />
-      <PortfolioSection />
-      <ContactSection />
-      <Footer />
+      
+      <LazySection>
+        <AboutSection />
+      </LazySection>
+      
+      <LazySection>
+        <PortfolioSection />
+      </LazySection>
+      
+      <LazySection>
+        <ContactSection />
+      </LazySection>
+      
+      <LazySection>
+        <Footer />
+      </LazySection>
     </div>
   );
 }

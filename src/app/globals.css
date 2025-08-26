@@ -127,3 +127,138 @@ body {
     -webkit-text-fill-color: transparent;
   }
 }
+
+/* GPU-accelerated animations */
+.gpu-accelerated {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimized animations */
+.animate-efficient {
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Parallax optimization */
+.parallax-element {
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Particle system optimization */
+.particle-canvas {
+  will-change: auto;
+  transform: translateZ(0);
+  image-rendering: crisp-edges;
+}
+
+/* Battery-aware animations */
+.battery-conscious {
+  animation-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+
+/* High performance mode */
+.high-performance {
+  will-change: transform, opacity, scale;
+  contain: layout style paint;
+}
+
+/* Gyroscope-enabled elements */
+.gyro-enabled {
+  will-change: transform;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+/* 3D parallax layers */
+.parallax-3d {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.parallax-layer {
+  position: absolute;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Audio-reactive elements */
+.audio-reactive {
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Time-based theme transitions */
+.theme-transition {
+  transition: 
+    background-color 2s ease-in-out,
+    color 2s ease-in-out,
+    border-color 2s ease-in-out,
+    box-shadow 2s ease-in-out;
+}
+
+/* Performance monitoring */
+.perf-monitor {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #00ff00;
+  padding: 8px;
+  font-family: monospace;
+  font-size: 12px;
+  border-radius: 4px;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+/* Intersection observer optimizations */
+.observer-target {
+  contain: layout style paint;
+}
+
+/* Loading states */
+.skeleton-loading {
+  background: linear-gradient(
+    90deg,
+    #1a1a1a 25%,
+    #2a2a2a 37%,
+    #1a1a1a 63%
+  );
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Hover optimizations */
+.hover-optimized {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-optimized:hover {
+  transform: translateY(-2px) scale(1.02);
+  will-change: transform;
+}
+
+/* Critical path optimizations */
+.critical-resource {
+  font-display: swap;
+}
+
+/* Lazy loading placeholders */
+.lazy-placeholder {
+  background: 
+    linear-gradient(135deg, #1a1a1a 25%, transparent 25%),
+    linear-gradient(225deg, #1a1a1a 25%, transparent 25%),
+    linear-gradient(45deg, #1a1a1a 25%, transparent 25%),
+    linear-gradient(315deg, #1a1a1a 25%, #2a2a2a 25%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
