@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vilidaymond Portfolio
+
+A dark, artistic portfolio website built with Next.js, TypeScript, and Framer Motion, featuring mysterious aesthetics and smooth animations.
+
+## Features
+
+- 🎨 Dark artistic design with black/red color scheme
+- ✨ Particle animation system
+- 🌟 Parallax scrolling effects
+- 🎭 Framer Motion animations throughout
+- 📱 Fully responsive design
+- 🔗 Instagram integration ready
+- 📧 Contact form with animations
+- 🚀 Optimized for Netlify deployment
+
+## Tech Stack
+
+- **Frontend:** Next.js 15, React 19, TypeScript
+- **Styling:** Tailwind CSS with custom dark theme
+- **Animations:** Framer Motion, CSS animations
+- **Icons:** Lucide React
+- **3D Elements:** Three.js, React Three Fiber
+- **Deployment:** Netlify (static export)
 
 ## Getting Started
 
-First, run the development server:
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd vilidaymond-portfolio
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. **Open your browser:**
+   Navigate to [http://localhost:3000](http://localhost:3000)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment
 
-## Learn More
+This portfolio is configured for static export and optimized for Netlify deployment:
 
-To learn more about Next.js, take a look at the following resources:
+1. **Build for production:**
+   ```bash
+   npm run build
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Deploy to Netlify:**
+   - Connect your repository to Netlify
+   - Build command: `npm run build`
+   - Publish directory: `out`
+   - The `netlify.toml` file is already configured
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Customization
 
-## Deploy on Vercel
+### Colors
+The dark theme colors are defined in `tailwind.config.ts`:
+- Primary: Black (#0A0A0A), Dark Gray (#1A1A1A), Red (#DC2626)
+- Secondary: Gray variations for text and accents
+- Accent: Crimson and rose variations for highlights
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Fonts
+Google Fonts integration includes:
+- **Display:** Playfair Display (serif)
+- **Body:** Inter (sans-serif)  
+- **Mono:** JetBrains Mono (monospace)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Sections
+1. **Hero** - Animated introduction with 3D hover effects
+2. **About** - Personal story with statistics
+3. **Portfolio** - Filterable gallery with Instagram integration
+4. **Contact** - Animated contact form
+5. **Footer** - Social links and copyright
+
+### Instagram Integration
+Update the Instagram links in:
+- `src/components/Navigation.tsx`
+- `src/components/PortfolioSection.tsx`
+- `src/components/ContactSection.tsx`
+
+## Performance Features
+
+- Static site generation (SSG)
+- Image optimization disabled for static export
+- CSS and JS caching headers
+- Lazy loading components
+- Efficient animations with Framer Motion
+
+## Browser Support
+
+- Modern browsers with ES6+ support
+- Responsive design for mobile, tablet, and desktop
+- Optimized animations for 60fps performance
+
+## License
+
+This project is created for Vilidaymond's portfolio. All artworks and content are original creations.
+
+---
+
+*Crafted with mystery and artistic vision* 🎨

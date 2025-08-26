@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://vilidaymond.netlify.app/sitemap.xml
+
+# Crawl-delay for bots
+Crawl-delay: 1
