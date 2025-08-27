@@ -127,7 +127,7 @@ export function AudioProvider({ children }: AudioProviderProps) {
 
   // Add global audio event listeners
   useEffect(() => {
-    if (!isEnabled) return;
+    if (!isEnabled || typeof window === 'undefined') return;
 
     const handleGlobalClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;

@@ -162,7 +162,7 @@ interface AppProviderProps {
 export function AppProvider({ children }: AppProviderProps) {
   const [state, dispatch] = useReducer(appReducer, initialState);
   
-  // Hooks for automatic state updates
+  // Hooks for automatic state updates (only on client)
   const { currentTheme } = useTimeTheme();
   const animationSettings = useAnimationSettings();
   
@@ -175,7 +175,9 @@ export function AppProvider({ children }: AppProviderProps) {
   
   // Update animation settings based on performance
   useEffect(() => {
-    dispatch({ type: 'UPDATE_ANIMATION_SETTINGS', payload: animationSettings });
+    if (typeof window !== 'undefined') {
+      dispatch({ type: 'UPDATE_ANIMATION_SETTINGS', payload: animationSettings });
+    }
   }, [animationSettings]);
   
   // Load preferences from localStorage

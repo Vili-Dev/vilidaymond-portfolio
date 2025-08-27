@@ -73,6 +73,8 @@ export default function TimeThemeProvider({ children }: TimeThemeProviderProps) 
 
   // Handle system theme preference changes
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     
     const handleChange = () => {
@@ -102,6 +104,8 @@ export default function TimeThemeProvider({ children }: TimeThemeProviderProps) 
 
   // Smooth theme transitions
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     document.body.classList.add('theme-transition');
     
     return () => {

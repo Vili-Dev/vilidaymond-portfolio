@@ -72,7 +72,7 @@ export default function OptimizedParallax({
   const gyroTransform = useRef({ x: 0, y: 0, rotateX: 0, rotateY: 0 });
 
   useAnimationFrame(() => {
-    if (enableGyroscope && gyroscope.isSupported && animationSettings.enableParallax) {
+    if (typeof window !== 'undefined' && enableGyroscope && gyroscope.isSupported && animationSettings.enableParallax) {
       const { x, y } = gyroscope.getParallaxValues(10);
       gyroTransform.current = {
         x: x,

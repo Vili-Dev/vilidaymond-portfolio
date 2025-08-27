@@ -16,10 +16,12 @@ export function usePerformance(): PerformanceMetrics {
     connectionType: null,
     reducedMotion: false,
     deviceMemory: null,
-    hardwareConcurrency: navigator.hardwareConcurrency || 4
+    hardwareConcurrency: typeof window !== 'undefined' ? (navigator.hardwareConcurrency || 4) : 4
   });
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const updateMetrics = async () => {
       // Check for reduced motion preference
       const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
