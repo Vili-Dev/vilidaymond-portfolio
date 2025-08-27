@@ -79,7 +79,7 @@ export default function HeroSection() {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="relative z-10 text-center px-4 sm:px-6 lg:px-8 transition-transform duration-300 ease-out w-full max-w-6xl mx-auto"
+        className="relative z-10 text-center px-4 sm:px-6 lg:px-12 xl:px-16 transition-transform duration-300 ease-out w-full max-w-6xl mx-auto"
         style={{
           paddingTop: '5vh',
           paddingBottom: '5vh',
@@ -121,21 +121,20 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
-          className="mb-12"
-          style={{ justifyContent: 'center', display: 'flex' }}
+          className="mb-12 justify-center flex"
         >
           <div className="max-w-3xl mx-auto">
             <motion.p
               whileHover={{ scale: 1.02 }}
               className="text-lg sm:text-xl lg:text-2xl text-secondary-lightGray font-light leading-relaxed mb-4 text-shadow"
             >
-              Digital Artist & Creative Visionary
+              AI Artist & Digital Creator
             </motion.p>
             <motion.p
               whileHover={{ scale: 1.01 }}
               className="text-base sm:text-lg text-secondary-gray font-light leading-relaxed text-shadow"
             >
-              Crafting dark, mysterious worlds through the lens of artistic expression
+              Crafting stunning visuals with ComfyUI and Photoshop expertise
             </motion.p>
           </div>
         </motion.div>
@@ -144,7 +143,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.0, duration: 0.6 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-8 max-w-lg mx-auto"
+          className="flex flex-col sm:flex-row items-center justify-center gap-8 mx-auto"
         >
           <HolographicEffect>
             <MorphingButton

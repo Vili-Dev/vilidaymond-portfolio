@@ -76,7 +76,45 @@ body {
   background: #EF4444;
 }
 
-/* Responsive improvements */
+/* Container width optimizations */
+.container-fluid {
+  width: 100%;
+  max-width: none;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-fluid {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-fluid {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-fluid {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container-fluid {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+}
+
+/* Enhanced responsive improvements */
 @media (max-width: 640px) {
   .text-shadow {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
@@ -84,6 +122,54 @@ body {
   
   .glass-effect {
     backdrop-filter: blur(8px);
+  }
+  
+  /* Mobile-first content centering */
+  .mobile-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Tablet optimizations */
+  .tablet-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 48rem;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* Desktop optimizations */
+  .desktop-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  .content-width-optimal {
+    width: 100%;
+    max-width: calc(100vw - 8rem);
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1536px) {
+  /* Ultra-wide screen optimizations */
+  .ultrawide-container {
+    max-width: 120rem;
+    margin: 0 auto;
+  }
+  
+  .content-width-optimal {
+    max-width: calc(100vw - 12rem);
   }
 }
 
@@ -247,9 +333,123 @@ body {
   will-change: transform;
 }
 
+/* Layout utility classes */
+.centered-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+}
+
+.responsive-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  align-items: start;
+}
+
+@media (min-width: 640px) {
+  .responsive-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .responsive-grid {
+    gap: 3rem;
+  }
+}
+
+/* Improved spacing system */
+.section-spacing {
+  padding: 5rem 0;
+}
+
+@media (min-width: 1024px) {
+  .section-spacing {
+    padding: 8rem 0;
+  }
+}
+
+@media (min-width: 1280px) {
+  .section-spacing {
+    padding: 10rem 0;
+  }
+}
+
 /* Critical path optimizations */
 .critical-resource {
   font-display: swap;
+}
+
+/* Viewport-based responsive containers */
+.vw-container {
+  width: 100vw;
+  max-width: 100%;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding-left: max(1rem, calc((100vw - 80rem) / 2));
+  padding-right: max(1rem, calc((100vw - 80rem) / 2));
+}
+
+@media (max-width: 640px) {
+  .vw-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Content flow improvements */
+.content-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.content-flow > * {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Flexible layout system */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-around {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+/* Grid improvements */
+.auto-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: 2rem;
+  justify-items: center;
 }
 
 /* Lazy loading placeholders */

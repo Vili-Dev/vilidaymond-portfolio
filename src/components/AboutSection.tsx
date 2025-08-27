@@ -25,13 +25,13 @@ export default function AboutSection() {
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary-red to-transparent"></div>
       
       <ParallaxSection speed={0.3}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10">
           <motion.div
             ref={ref}
             variants={staggerContainer}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
-            className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center justify-center"
+            className="grid lg:grid-cols-2 gap-16 lg:gap-20 xl:gap-24 items-center justify-center max-w-7xl mx-auto"
           >
             <motion.div 
               variants={fadeInUp} 
@@ -56,35 +56,35 @@ export default function AboutSection() {
                   className="space-y-6 text-secondary-lightGray"
                 >
                   <p className="text-lg leading-relaxed">
-                    I am a digital artist who finds beauty in the shadows and mystery in the darkness. 
-                    My work explores the intersection of light and shadow, creating atmospheric pieces 
-                    that speak to the soul's deeper mysteries.
+                    I am an AI artist who harnesses the power of artificial intelligence to create 
+                    captivating visual experiences. Using ComfyUI as my primary creative tool, I craft 
+                    intricate workflows that transform imagination into stunning digital art.
                   </p>
                   
                   <p className="text-lg leading-relaxed">
-                    Drawing inspiration from gothic aesthetics and contemporary digital art, I craft 
-                    visual narratives that challenge perception and invite contemplation. Each piece 
-                    is a journey into the unknown, a glimpse into worlds unseen.
+                    My expertise lies in combining the precision of AI-generated imagery with the 
+                    refined touch of Photoshop post-processing. This hybrid approach allows me to 
+                    maintain creative control while leveraging AI's infinite possibilities.
                   </p>
                   
                   <p className="text-lg leading-relaxed">
-                    Through my art, I aim to evoke emotion, provoke thought, and create connections 
-                    between the viewer and the mysterious realms that exist just beyond our everyday 
-                    experience.
+                    From concept art to final masterpiece, I bridge the gap between human creativity 
+                    and artificial intelligence, creating works that push the boundaries of what's 
+                    possible in digital art.
                   </p>
                 </motion.div>
 
                 <motion.div
                   variants={fadeInUp}
                   transition={defaultTransition}
-                  className="mt-10 grid grid-cols-2 sm:grid-cols-3 gap-8 max-w-2xl mx-auto"
+                  className="mt-12 grid grid-cols-2 sm:grid-cols-3 gap-8 max-w-3xl mx-auto text-center"
                 >
                   {[
-                    { label: 'Years Creating', value: '5+' },
-                    { label: 'Artworks', value: '150+' },
-                    { label: 'Exhibitions', value: '12' },
-                    { label: 'Awards', value: '8' },
-                    { label: 'Collaborations', value: '25+' },
+                    { label: 'Years with AI', value: '3+' },
+                    { label: 'AI Artworks', value: '500+' },
+                    { label: 'ComfyUI Workflows', value: '50+' },
+                    { label: 'Photoshop Projects', value: '200+' },
+                    { label: 'AI Models Trained', value: '15+' },
                     { label: 'Happy Clients', value: '100+' },
                   ].map((stat, index) => (
                     <motion.div
@@ -137,7 +137,7 @@ export default function AboutSection() {
                     <div className="absolute bottom-6 left-6 right-6">
                       <div className="glass-effect rounded-lg p-4">
                         <h3 className="font-display text-xl text-secondary-white mb-1">Vili Daymond</h3>
-                        <p className="text-secondary-lightGray text-sm">Digital Artist & Visionary</p>
+                        <p className="text-secondary-lightGray text-sm">AI Artist & ComfyUI Specialist</p>
                       </div>
                     </div>
                   </div>

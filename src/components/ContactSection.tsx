@@ -85,13 +85,13 @@ export default function ContactSection() {
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary-red to-transparent"></div>
       
       <ParallaxSection speed={0.5}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10">
           <motion.div
             ref={ref}
             variants={staggerContainer}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
-            className="text-center mb-16"
+            className="text-center mb-20 max-w-5xl mx-auto"
           >
             <motion.h2
               variants={fadeInUp}
@@ -104,19 +104,19 @@ export default function ContactSection() {
             <motion.p
               variants={fadeInUp}
               transition={defaultTransition}
-              className="text-lg text-secondary-lightGray max-w-3xl mx-auto"
+              className="text-lg text-secondary-lightGray max-w-2xl mx-auto"
             >
               Ready to collaborate on something mysterious and beautiful? 
               Let's bring your dark visions to life together.
             </motion.p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-16 items-start justify-center">
+          <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 xl:gap-24 items-start justify-center max-w-7xl mx-auto">
             <motion.div
               variants={staggerContainer}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
-              className="space-y-8"
+              className="space-y-8 max-w-lg mx-auto lg:mx-0"
             >
               <motion.div 
                 variants={fadeInUp}
@@ -183,7 +183,7 @@ export default function ContactSection() {
               transition={defaultTransition}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
-              className="glass-effect rounded-2xl p-8 red-glow"
+              className="glass-effect rounded-2xl p-8 red-glow max-w-xl mx-auto lg:mx-0"
             >
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid sm:grid-cols-2 gap-6">

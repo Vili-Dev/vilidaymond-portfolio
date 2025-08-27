@@ -26,73 +26,73 @@ interface ArtworkItem {
 const portfolioItems: ArtworkItem[] = [
   {
     id: 1,
-    title: "Shadows of the Soul",
-    description: "A haunting exploration of inner darkness and light",
-    category: "Digital Art",
+    title: "Neural Dreams",
+    description: "AI-generated surreal landscapes crafted with ComfyUI workflows",
+    category: "AI Generated",
     image: "/api/placeholder/400/500",
-    likes: 284,
-    comments: 42,
+    likes: 584,
+    comments: 92,
     featured: true,
     instagramUrl: "#"
   },
   {
     id: 2,
-    title: "Crimson Dreams",
-    description: "Where reality bleeds into fantasy",
-    category: "Conceptual",
+    title: "Photoshop Enhancement",
+    description: "AI base refined with advanced Photoshop techniques",
+    category: "AI + Photoshop",
     image: "/api/placeholder/400/600",
-    likes: 197,
-    comments: 28,
+    likes: 437,
+    comments: 68,
     featured: false,
     instagramUrl: "#"
   },
   {
     id: 3,
-    title: "Midnight Reverie",
-    description: "The beauty found in darkness",
-    category: "Portrait",
+    title: "Character Concept AI",
+    description: "Fantasy character design using custom ComfyUI nodes",
+    category: "Character Design",
     image: "/api/placeholder/400/500",
-    likes: 356,
-    comments: 67,
+    likes: 726,
+    comments: 134,
     featured: true,
     instagramUrl: "#"
   },
   {
     id: 4,
-    title: "Urban Gothic",
-    description: "Modern darkness meets classical beauty",
-    category: "Street Art",
+    title: "Cyberpunk Workflow",
+    description: "Complex ComfyUI workflow for futuristic cityscapes",
+    category: "Workflow Art",
     image: "/api/placeholder/400/550",
-    likes: 428,
+    likes: 628,
     comments: 89,
     featured: false,
     instagramUrl: "#"
   },
   {
     id: 5,
-    title: "Digital Noir",
-    description: "Technology meets the shadows",
-    category: "Digital Art",
+    title: "Style Transfer Magic",
+    description: "Custom LoRA training and style transfer techniques",
+    category: "Style Transfer",
     image: "/api/placeholder/400/480",
-    likes: 312,
-    comments: 45,
+    likes: 512,
+    comments: 75,
     featured: true,
     instagramUrl: "#"
   },
   {
     id: 6,
-    title: "Blood Moon Rising",
-    description: "When the night sky burns with passion",
-    category: "Landscape",
+    title: "AI Portrait Mastery",
+    description: "Hyperrealistic portraits with AI precision and human touch",
+    category: "AI Portraits",
     image: "/api/placeholder/400/520",
-    likes: 589,
-    comments: 124,
+    likes: 889,
+    comments: 164,
     featured: false,
     instagramUrl: "#"
   },
 ];
 
-const categories = ["All", "Digital Art", "Conceptual", "Portrait", "Street Art", "Landscape"];
+const categories = ["All", "AI Generated", "AI + Photoshop", "Character Design", "Workflow Art", "Style Transfer", "AI Portraits"];
 
 export default function PortfolioSection() {
   const { fadeInScale, staggerContainer, defaultTransition } = useAnimations();
@@ -116,21 +116,21 @@ export default function PortfolioSection() {
       <FogOverlay density={0.08} animated={true} />
       
       <ParallaxSection speed={0.4}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10">
           <motion.div
             ref={ref}
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-20"
+            className="text-center mb-20 max-w-5xl mx-auto"
           >
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-shadow">
               <span className="text-secondary-white">My</span>{' '}
               <span className="gradient-text">Portfolio</span>
             </h2>
             <p className="text-lg text-secondary-lightGray max-w-2xl mx-auto">
-              A collection of dark artistry, mysterious visions, and creative explorations 
-              that push the boundaries between light and shadow.
+              A showcase of AI-generated artworks, ComfyUI workflows, and Photoshop enhancements 
+              that demonstrate the fusion of artificial intelligence and human creativity.
             </p>
           </motion.div>
 
@@ -138,7 +138,7 @@ export default function PortfolioSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap justify-center gap-4 mb-12 max-w-4xl mx-auto"
+            className="flex flex-wrap justify-center gap-6 mb-16 max-w-6xl mx-auto"
           >
             {categories.map((category) => (
               <motion.button
@@ -161,7 +161,7 @@ export default function PortfolioSection() {
             variants={staggerContainer}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 lg:gap-10 xl:gap-12 max-w-7xl mx-auto justify-items-center"
           >
             <AnimatePresence mode="wait">
               {filteredItems.map((item) => (
@@ -242,7 +242,7 @@ export default function PortfolioSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.8 }}
-            className="text-center mt-20"
+            className="text-center mt-24 max-w-lg mx-auto"
           >
             <LiquidGradient>
               <MorphingButton morphType="pulse">

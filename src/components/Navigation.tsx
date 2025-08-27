@@ -44,8 +44,8 @@ export default function Navigation() {
           scrolled ? 'glass-effect red-glow' : 'bg-transparent'
         }`}
       >
-        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center lg:justify-around items-center h-18 lg:h-24 relative">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16">
+          <div className="flex justify-center lg:justify-around items-center h-18 lg:h-24 relative mx-auto">
             {/* Logo - Desktop */}
             <motion.div
               whileHover={{ scale: 1.05 }}
@@ -56,7 +56,7 @@ export default function Navigation() {
 
             {/* Navigation Menu - Desktop - Centré */}
             <div className="hidden lg:flex items-center justify-center">
-              <div className="flex items-center">
+              <div className="flex items-center" style={{ gap: '70px' }}>
                 {navigationItems.map((item, index) => (
                   <motion.button
                     key={item.name}
