@@ -44,20 +44,19 @@ export default function Navigation() {
           scrolled ? 'glass-effect red-glow' : 'bg-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center lg:justify-between items-center h-18 lg:h-24 relative">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center lg:justify-around items-center h-18 lg:h-24 relative">
             {/* Logo - Desktop */}
             <motion.div
               whileHover={{ scale: 1.05 }}
               className="lg:relative lg:left-auto text-xl lg:text-2xl font-display font-bold"
-              style={{ marginLeft: '32px' }}
             >
               <span className="gradient-text">Vilidaymond</span>
             </motion.div>
 
             {/* Navigation Menu - Desktop - Centré */}
-            <div className="hidden lg:flex items-center justify-center flex-1">
-              <div className="flex items-center" style={{ gap: '32px', marginRight: '-250px' }}>
+            <div className="hidden lg:flex items-center justify-center">
+              <div className="flex items-center">
                 {navigationItems.map((item, index) => (
                   <motion.button
                     key={item.name}

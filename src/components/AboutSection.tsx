@@ -3,12 +3,13 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import ParallaxSection from './ParallaxSection';
-import { fadeInUp, staggerContainer, defaultTransition } from '@/utils/animations';
+import { useAnimations } from '@/utils/animations';
 import { FloatingCard, PulsingElement } from './InteractiveElements';
 import { AnimatedGradientBorder, MultiLayerGlow } from './EnhancedGlowEffects';
 import { MistEffect } from './AtmosphericEffects';
 
 export default function AboutSection() {
+  const { fadeInUp, staggerContainer, defaultTransition } = useAnimations();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.2,

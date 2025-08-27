@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Mail, Phone, MapPin, Send, Instagram, Twitter, Github } from 'lucide-react';
 import ParallaxSection from './ParallaxSection';
-import { fadeInUp, staggerContainer, defaultTransition } from '@/utils/animations';
+import { useAnimations } from '@/utils/animations';
 
 interface FormData {
   name: string;
@@ -15,6 +15,7 @@ interface FormData {
 }
 
 export default function ContactSection() {
+  const { fadeInUp, staggerContainer, defaultTransition } = useAnimations();
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',

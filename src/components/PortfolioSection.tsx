@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { ExternalLink, Heart, MessageCircle, Instagram } from 'lucide-react';
 import ParallaxSection from './ParallaxSection';
-import { fadeInScale, staggerContainer, defaultTransition } from '@/utils/animations';
+import { useAnimations } from '@/utils/animations';
 import { MagneticButton, RippleEffect } from './InteractiveElements';
 import { HolographicEffect, LiquidGradient } from './EnhancedGlowEffects';
 import { MorphingButton } from './MorphingButtons';
@@ -95,6 +95,7 @@ const portfolioItems: ArtworkItem[] = [
 const categories = ["All", "Digital Art", "Conceptual", "Portrait", "Street Art", "Landscape"];
 
 export default function PortfolioSection() {
+  const { fadeInScale, staggerContainer, defaultTransition } = useAnimations();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedItem, setSelectedItem] = useState<ArtworkItem | null>(null);
   

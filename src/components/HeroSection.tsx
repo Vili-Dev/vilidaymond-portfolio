@@ -15,21 +15,32 @@ export default function HeroSection() {
     const container = containerRef.current;
     if (!container) return;
 
+    let animationFrameId: number;
+    let lastTime = 0;
+    const throttleDelay = 16; // ~60fps
+
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = container.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      
-      const rotateX = (y - centerY) / centerY * 10;
-      const rotateY = (centerX - x) / centerX * 10;
-      
-      container.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      const now = performance.now();
+      if (now - lastTime < throttleDelay) return;
+      lastTime = now;
+
+      animationFrameId = requestAnimationFrame(() => {
+        const rect = container.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = (y - centerY) / centerY * 10;
+        const rotateY = (centerX - x) / centerX * 10;
+        
+        container.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
     };
 
     const handleMouseLeave = () => {
+      cancelAnimationFrame(animationFrameId);
       container.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
     };
 
@@ -37,6 +48,7 @@ export default function HeroSection() {
     container.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
+      cancelAnimationFrame(animationFrameId);
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
     };
@@ -68,6 +80,14 @@ export default function HeroSection() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
         className="relative z-10 text-center px-4 sm:px-6 lg:px-8 transition-transform duration-300 ease-out w-full max-w-6xl mx-auto"
+        style={{
+          paddingTop: '5vh',
+          paddingBottom: '5vh',
+          minHeight: '90vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center'
+        }}
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
@@ -102,6 +122,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
           className="mb-12"
+          style={{ justifyContent: 'center', display: 'flex' }}
         >
           <div className="max-w-3xl mx-auto">
             <motion.p

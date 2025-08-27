@@ -7,6 +7,10 @@ interface PerformanceMetrics {
   reducedMotion: boolean;
   deviceMemory: number | null;
   hardwareConcurrency: number;
+  devicePixelRatio: number;
+  frameRate: number | null;
+  memoryUsage: number | null;
+  networkSpeed: number | null;
 }
 
 export function usePerformance(): PerformanceMetrics {
@@ -16,7 +20,11 @@ export function usePerformance(): PerformanceMetrics {
     connectionType: null,
     reducedMotion: false,
     deviceMemory: null,
-    hardwareConcurrency: typeof window !== 'undefined' ? (navigator.hardwareConcurrency || 4) : 4
+    hardwareConcurrency: typeof window !== 'undefined' ? (navigator.hardwareConcurrency || 4) : 4,
+    devicePixelRatio: typeof window !== 'undefined' ? window.devicePixelRatio : 1,
+    frameRate: null,
+    memoryUsage: null,
+    networkSpeed: null
   });
 
   useEffect(() => {
