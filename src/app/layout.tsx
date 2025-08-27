@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import ErrorBoundary from "@/components/ErrorBoundary";
+import EnhancedErrorBoundary from "@/components/EnhancedErrorBoundary";
+import { AppProvider } from "@/contexts/AppContext";
+import TimeThemeProvider from "@/components/TimeThemeProvider";
+import { AudioProvider } from "@/components/AudioProvider";
 
 const inter = Inter({
   variable: "--font-body",
@@ -82,9 +85,15 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${playfairDisplay.variable} ${jetBrainsMono.variable} antialiased`}
       >
-        <ErrorBoundary>
-          {children}
-        </ErrorBoundary>
+        <EnhancedErrorBoundary name="RootLayout">
+          <AppProvider>
+            <TimeThemeProvider>
+              <AudioProvider>
+                {children}
+              </AudioProvider>
+            </TimeThemeProvider>
+          </AppProvider>
+        </EnhancedErrorBoundary>
       </body>
     </html>
   );

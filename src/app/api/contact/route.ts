@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// Netlify Functions configuration
+export const config = {
+  runtime: 'nodejs18.x'
+};
+
 interface ContactFormData {
   name: string;
   email: string;

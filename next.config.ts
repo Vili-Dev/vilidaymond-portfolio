@@ -1,17 +1,33 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'export',
+  // Remove 'export' output for Netlify compatibility with API routes
+  // Netlify will handle the deployment automatically
   trailingSlash: true,
   
   // Image optimization
   images: {
-    unoptimized: true, // Required for static export
+    // Keep unoptimized for Netlify compatibility
+    unoptimized: true,
+    domains: [
+      'images.unsplash.com',
+      'scontent-cdg4-2.cdninstagram.com',
+      'scontent-cdg4-1.cdninstagram.com',
+      'instagram.com'
+    ],
   },
   
   // Build optimizations
   experimental: {
-    // optimizeCss: true, // Disabled for static export compatibility
+    turbo: {
+      // Turbopack optimizations
+    }
+  },
+  
+  // Environment variable handling
+  env: {
+    NEXT_PUBLIC_PORTFOLIO_NAME: process.env.NEXT_PUBLIC_PORTFOLIO_NAME,
+    NEXT_PUBLIC_INSTAGRAM_HANDLE: process.env.NEXT_PUBLIC_INSTAGRAM_HANDLE,
   },
   
   // Development vs production settings
@@ -21,6 +37,13 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: process.env.NODE_ENV === 'production',
   },
+  
+  // Netlify-specific optimizations
+  ...(process.env.NETLIFY && {
+    // Netlify-specific settings
+    poweredByHeader: false,
+    generateEtags: false,
+  }),
 };
 
 export default nextConfig;
