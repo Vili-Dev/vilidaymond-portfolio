@@ -79,11 +79,11 @@ export default function HeroSection() {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="relative z-10 text-center px-4 sm:px-6 lg:px-12 xl:px-16 transition-transform duration-300 ease-out w-full max-w-6xl mx-auto"
+        className="relative z-10 text-center px-4 sm:px-3 lg:px-12 xl:px-16 transition-transform duration-300 ease-out w-full max-w-6xl mx-auto"
         style={{
           paddingTop: '5vh',
           paddingBottom: '5vh',
-          minHeight: '90vh',
+          minHeight: '70vh',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center'
@@ -95,14 +95,14 @@ export default function HeroSection() {
           transition={{ delay: 0.2, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="mb-8"
         >
-          <h1 className="font-display text-4xl sm:text-6xl lg:text-8xl font-bold mb-6 text-shadow">
+          <h1 className="font-display text-4xl sm:text-6xl lg:text-8xl font-bold mb-3 text-shadow">
             <motion.span
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.6 }}
               className="block text-secondary-white"
             >
-              Vili
+              
             </motion.span>
             <motion.span
               initial={{ opacity: 0, y: 30 }}
@@ -111,7 +111,7 @@ export default function HeroSection() {
               className="block"
             >
               <GradientText animated={true}>
-                Daymond
+                Vilidaymond
               </GradientText>
             </motion.span>
           </h1>
