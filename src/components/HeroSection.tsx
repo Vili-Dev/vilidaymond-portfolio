@@ -3,6 +3,10 @@
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
+import { MorphingButton } from './MorphingButtons';
+import { GradientText } from './EnhancedTypography';
+import { SmokeEffect, DepthHaze } from './AtmosphericEffects';
+import { HolographicEffect } from './EnhancedGlowEffects';
 
 export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -47,6 +51,9 @@ export default function HeroSection() {
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-primary-black via-primary-darkGray to-primary-black"></div>
       
+      <SmokeEffect intensity={0.3} direction="up" particleCount={20} />
+      <DepthHaze layers={3} intensity={0.5} />
+      
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-primary-red rounded-full animate-pulse"></div>
         <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-accent-crimson rounded-full animate-pulse delay-1000"></div>
@@ -60,7 +67,7 @@ export default function HeroSection() {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="relative z-10 text-center px-4 sm:px-6 lg:px-8 transition-transform duration-300 ease-out"
+        className="relative z-10 text-center px-4 sm:px-6 lg:px-8 transition-transform duration-300 ease-out w-full max-w-6xl mx-auto"
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
@@ -81,9 +88,11 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.6 }}
-              className="block gradient-text animate-glow"
+              className="block"
             >
-              Daymond
+              <GradientText animated={true}>
+                Daymond
+              </GradientText>
             </motion.span>
           </h1>
         </motion.div>
@@ -94,7 +103,7 @@ export default function HeroSection() {
           transition={{ delay: 0.8, duration: 0.6 }}
           className="mb-12"
         >
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-3xl mx-auto">
             <motion.p
               whileHover={{ scale: 1.02 }}
               className="text-lg sm:text-xl lg:text-2xl text-secondary-lightGray font-light leading-relaxed mb-4 text-shadow"
@@ -114,31 +123,27 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.0, duration: 0.6 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-6"
+          className="flex flex-col sm:flex-row items-center justify-center gap-8 max-w-lg mx-auto"
         >
-          <motion.button
-            onClick={scrollToPortfolio}
-            whileHover={{ scale: 1.05, boxShadow: '0 0 25px rgba(220, 38, 38, 0.5)' }}
-            whileTap={{ scale: 0.95 }}
-            className="group px-8 py-4 bg-gradient-to-r from-primary-red to-primary-darkRed rounded-full font-medium text-secondary-white transition-all duration-300 hover:from-primary-darkRed hover:to-primary-bloodRed glass-effect"
-          >
-            <span className="flex items-center gap-2">
-              Explore My Work
-              <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform duration-300" />
-            </span>
-          </motion.button>
+          <HolographicEffect>
+            <MorphingButton
+              onClick={scrollToPortfolio}
+              morphType="neural"
+              className="group"
+            >
+              <span className="flex items-center gap-2">
+                Explore My Work
+                <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform duration-300" />
+              </span>
+            </MorphingButton>
+          </HolographicEffect>
 
-          <motion.button
-            whileHover={{ 
-              scale: 1.05, 
-              borderColor: '#DC2626',
-              color: '#DC2626'
-            }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 border border-secondary-gray rounded-full font-medium text-secondary-lightGray hover:border-primary-red hover:text-primary-red transition-all duration-300"
+          <MorphingButton
+            variant="secondary"
+            morphType="crystallize"
           >
             Get In Touch
-          </motion.button>
+          </MorphingButton>
         </motion.div>
 
         <motion.div

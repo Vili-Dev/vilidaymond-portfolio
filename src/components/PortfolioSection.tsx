@@ -6,6 +6,10 @@ import { useInView } from 'react-intersection-observer';
 import { ExternalLink, Heart, MessageCircle, Instagram } from 'lucide-react';
 import ParallaxSection from './ParallaxSection';
 import { fadeInScale, staggerContainer, defaultTransition } from '@/utils/animations';
+import { MagneticButton, RippleEffect } from './InteractiveElements';
+import { HolographicEffect, LiquidGradient } from './EnhancedGlowEffects';
+import { MorphingButton } from './MorphingButtons';
+import { FogOverlay } from './AtmosphericEffects';
 
 interface ArtworkItem {
   id: number;
@@ -108,14 +112,16 @@ export default function PortfolioSection() {
     <section id="portfolio" className="relative py-20 lg:py-32 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-primary-darkGray via-primary-black to-primary-darkGray"></div>
       
+      <FogOverlay density={0.08} animated={true} />
+      
       <ParallaxSection speed={0.4}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             ref={ref}
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            className="text-center mb-20"
           >
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-shadow">
               <span className="text-secondary-white">My</span>{' '}
@@ -131,7 +137,7 @@ export default function PortfolioSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap justify-center gap-4 mb-12"
+            className="flex flex-wrap justify-center gap-4 mb-12 max-w-4xl mx-auto"
           >
             {categories.map((category) => (
               <motion.button
@@ -163,11 +169,13 @@ export default function PortfolioSection() {
                   variants={fadeInScale}
                   transition={defaultTransition}
                   layout
-                  whileHover={{ y: -10 }}
+                  whileHover={{ y: -10, rotateY: 5, rotateX: 5 }}
                   onClick={() => setSelectedItem(item)}
                   className="group cursor-pointer"
+                  style={{ transformPerspective: 1000 }}
                 >
-                  <div className="relative overflow-hidden rounded-2xl glass-effect hover:red-glow transition-all duration-300">
+                  <HolographicEffect>
+                    <RippleEffect className="relative overflow-hidden rounded-2xl glass-effect hover:red-glow transition-all duration-300">
                     <div className="aspect-[4/5] bg-gradient-to-br from-secondary-gray to-primary-darkGray">
                       <div className="absolute inset-0 bg-gradient-to-t from-primary-black/60 to-transparent"></div>
                       
@@ -222,7 +230,8 @@ export default function PortfolioSection() {
                         </div>
                       </div>
                     </div>
-                  </div>
+                    </RippleEffect>
+                  </HolographicEffect>
                 </motion.div>
               ))}
             </AnimatePresence>
@@ -232,17 +241,14 @@ export default function PortfolioSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.8 }}
-            className="text-center mt-16"
+            className="text-center mt-20"
           >
-            <motion.a
-              href="#"
-              whileHover={{ scale: 1.05, boxShadow: '0 0 25px rgba(220, 38, 38, 0.5)' }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary-red to-primary-darkRed rounded-full font-medium text-secondary-white transition-all duration-300 hover:from-primary-darkRed hover:to-primary-bloodRed glass-effect"
-            >
-              <Instagram className="w-5 h-5" />
-              Follow on Instagram
-            </motion.a>
+            <LiquidGradient>
+              <MorphingButton morphType="pulse">
+                <Instagram className="w-5 h-5" />
+                Follow on Instagram
+              </MorphingButton>
+            </LiquidGradient>
           </motion.div>
         </div>
       </ParallaxSection>

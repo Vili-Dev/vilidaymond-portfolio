@@ -11,11 +11,7 @@ const navigationItems = [
   { name: 'Contact', href: '#contact' },
 ];
 
-const socialLinks = [
-  { name: 'Instagram', href: '#', icon: Instagram },
-  { name: 'Email', href: 'mailto:hello@vilidaymond.com', icon: Mail },
-  { name: 'GitHub', href: '#', icon: Github },
-];
+// Les liens sociaux sont maintenant dans le Footer
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,54 +45,59 @@ export default function Navigation() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 lg:h-20">
+          <div className="flex justify-center lg:justify-between items-center h-18 lg:h-24 relative">
+            {/* Logo - Desktop */}
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="text-xl lg:text-2xl font-display font-bold"
+              className="lg:relative lg:left-auto text-xl lg:text-2xl font-display font-bold"
+              style={{ marginLeft: '32px' }}
             >
               <span className="gradient-text">Vilidaymond</span>
             </motion.div>
 
-            <div className="hidden lg:flex items-center space-x-8">
-              {navigationItems.map((item) => (
-                <motion.button
-                  key={item.name}
-                  onClick={() => handleNavClick(item.href)}
-                  whileHover={{ scale: 1.1, color: '#DC2626' }}
-                  whileTap={{ scale: 0.95 }}
-                  className="text-secondary-lightGray hover:text-primary-red transition-colors duration-200 font-medium"
-                >
-                  {item.name}
-                </motion.button>
-              ))}
+            {/* Navigation Menu - Desktop - Centré */}
+            <div className="hidden lg:flex items-center justify-center flex-1">
+              <div className="flex items-center" style={{ gap: '32px', marginRight: '-250px' }}>
+                {navigationItems.map((item, index) => (
+                  <motion.button
+                    key={item.name}
+                    onClick={() => handleNavClick(item.href)}
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="relative text-secondary-white hover:text-primary-red transition-all duration-300 font-medium text-lg tracking-wide group px-2 py-1"
+                  >
+                    {item.name}
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-red to-accent-crimson group-hover:w-full transition-all duration-300"></span>
+                  </motion.button>
+                ))}
+              </div>
             </div>
 
-            <div className="hidden lg:flex items-center space-x-4">
-              {socialLinks.map((social) => (
-                <motion.a
-                  key={social.name}
-                  href={social.href}
-                  whileHover={{ scale: 1.2, color: '#DC2626' }}
-                  whileTap={{ scale: 0.9 }}
-                  className="text-secondary-lightGray hover:text-primary-red transition-colors duration-200"
-                  aria-label={`Visit ${social.name}`}
-                  target={social.href.startsWith('http') ? '_blank' : undefined}
-                  rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                >
-                  <social.icon size={20} />
-                </motion.a>
-              ))}
+            {/* Contact CTA - Desktop */}
+            <div className="hidden lg:block">
+              <motion.button
+                onClick={() => handleNavClick('#contact')}
+                whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(220, 38, 38, 0.4)" }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-3 bg-gradient-to-r from-primary-red to-primary-darkRed hover:from-primary-darkRed hover:to-accent-crimson text-white font-semibold rounded-lg transition-all duration-300 shadow-lg border border-transparent hover:border-accent-rose"
+              >
+                Let's Talk
+              </motion.button>
             </div>
 
+            {/* Mobile Menu Button */}
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden text-secondary-white"
+              className="absolute right-0 lg:hidden text-secondary-white p-2"
               aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={isOpen}
             >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+              {isOpen ? <X size={28} /> : <Menu size={28} />}
             </motion.button>
           </div>
         </div>
@@ -111,40 +112,37 @@ export default function Navigation() {
             transition={{ type: 'tween', duration: 0.3 }}
             className="fixed inset-0 z-40 lg:hidden"
           >
-            <div className="glass-effect h-full flex flex-col justify-center items-center space-y-8">
-              {navigationItems.map((item, index) => (
-                <motion.button
-                  key={item.name}
-                  onClick={() => handleNavClick(item.href)}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="text-3xl font-display text-secondary-white hover:text-primary-red transition-colors duration-200"
-                >
-                  {item.name}
-                </motion.button>
-              ))}
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                className="flex space-x-6 pt-8"
-              >
-                {socialLinks.map((social) => (
-                  <motion.a
-                    key={social.name}
-                    href={social.href}
-                    whileHover={{ scale: 1.3, color: '#DC2626' }}
-                    whileTap={{ scale: 0.9 }}
-                    className="text-secondary-lightGray hover:text-primary-red transition-colors duration-200"
+            <div className="glass-effect h-full flex flex-col justify-center items-center py-20">
+              <div className="flex flex-col items-center space-y-12">
+                {navigationItems.map((item, index) => (
+                  <motion.button
+                    key={item.name}
+                    onClick={() => handleNavClick(item.href)}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.15, duration: 0.6 }}
+                    whileHover={{ scale: 1.1, y: -4 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="relative text-4xl font-display text-secondary-white hover:text-primary-red transition-all duration-300 group py-3 px-6"
                   >
-                    <social.icon size={28} />
-                  </motion.a>
+                    {item.name}
+                    <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-primary-red to-accent-crimson group-hover:w-full transition-all duration-300"></span>
+                  </motion.button>
                 ))}
-              </motion.div>
+
+                {/* Contact CTA - Mobile */}
+                <motion.button
+                  onClick={() => handleNavClick('#contact')}
+                  initial={{ opacity: 0, scale: 0.8, y: 30 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ delay: 0.8, duration: 0.6 }}
+                  whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(220, 38, 38, 0.5)" }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-12 py-4 bg-gradient-to-r from-primary-red to-primary-darkRed hover:from-primary-darkRed hover:to-accent-crimson text-white font-semibold text-xl rounded-xl shadow-xl mt-8 border border-transparent hover:border-accent-rose transition-all duration-300"
+                >
+                  Let's Talk
+                </motion.button>
+              </div>
             </div>
           </motion.div>
         )}

@@ -84,7 +84,7 @@ export default function ContactSection() {
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary-red to-transparent"></div>
       
       <ParallaxSection speed={0.5}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             ref={ref}
             variants={staggerContainer}
@@ -103,14 +103,14 @@ export default function ContactSection() {
             <motion.p
               variants={fadeInUp}
               transition={defaultTransition}
-              className="text-lg text-secondary-lightGray max-w-2xl mx-auto"
+              className="text-lg text-secondary-lightGray max-w-3xl mx-auto"
             >
               Ready to collaborate on something mysterious and beautiful? 
               Let's bring your dark visions to life together.
             </motion.p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-16">
+          <div className="grid lg:grid-cols-2 gap-16 items-start justify-center">
             <motion.div
               variants={staggerContainer}
               initial="hidden"

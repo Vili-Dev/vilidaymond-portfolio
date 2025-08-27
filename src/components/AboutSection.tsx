@@ -4,6 +4,9 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import ParallaxSection from './ParallaxSection';
 import { fadeInUp, staggerContainer, defaultTransition } from '@/utils/animations';
+import { FloatingCard, PulsingElement } from './InteractiveElements';
+import { AnimatedGradientBorder, MultiLayerGlow } from './EnhancedGlowEffects';
+import { MistEffect } from './AtmosphericEffects';
 
 export default function AboutSection() {
   const [ref, inView] = useInView({
@@ -16,30 +19,34 @@ export default function AboutSection() {
     <section id="about" className="relative py-20 lg:py-32 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-primary-black via-primary-darkGray to-primary-black"></div>
       
+      <MistEffect intensity={0.2} speed={1.5} />
+      
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary-red to-transparent"></div>
       
       <ParallaxSection speed={0.3}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             ref={ref}
             variants={staggerContainer}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
-            className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center"
+            className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center justify-center"
           >
             <motion.div 
               variants={fadeInUp} 
               transition={defaultTransition}
               className="order-2 lg:order-1"
             >
-              <div className="relative">
+              <FloatingCard className="relative" intensity={8}>
                 <motion.h2
                   variants={fadeInUp}
                   transition={defaultTransition}
                   className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-8 text-shadow"
                 >
-                  <span className="text-secondary-white">About</span>{' '}
-                  <span className="gradient-text">Me</span>
+                  <PulsingElement>
+                    <span className="text-secondary-white">About</span>{' '}
+                    <span className="gradient-text">Me</span>
+                  </PulsingElement>
                 </motion.h2>
                 
                 <motion.div 
@@ -69,7 +76,7 @@ export default function AboutSection() {
                 <motion.div
                   variants={fadeInUp}
                   transition={defaultTransition}
-                  className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-6"
+                  className="mt-10 grid grid-cols-2 sm:grid-cols-3 gap-8 max-w-2xl mx-auto"
                 >
                   {[
                     { label: 'Years Creating', value: '5+' },
@@ -93,7 +100,7 @@ export default function AboutSection() {
                     </motion.div>
                   ))}
                 </motion.div>
-              </div>
+              </FloatingCard>
             </motion.div>
 
             <motion.div 
@@ -101,7 +108,7 @@ export default function AboutSection() {
               transition={defaultTransition}
               className="order-1 lg:order-2"
             >
-              <div className="relative group">
+              <AnimatedGradientBorder className="relative group">
                 <motion.div
                   whileHover={{ scale: 1.02, rotate: 1 }}
                   transition={{ duration: 0.3 }}
@@ -152,7 +159,7 @@ export default function AboutSection() {
                   }}
                   transition={{ duration: 5, repeat: Infinity }}
                 />
-              </div>
+              </AnimatedGradientBorder>
             </motion.div>
           </motion.div>
         </div>

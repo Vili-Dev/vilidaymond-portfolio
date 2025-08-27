@@ -3,7 +3,6 @@
 import { useRef, useEffect, ReactNode } from 'react';
 import { useScroll, useTransform, motion, useAnimationFrame } from 'framer-motion';
 import { useGyroscope } from '@/hooks/useGyroscope';
-import { useAnimationSettings } from '@/hooks/usePerformance';
 import { useApp } from '@/contexts/AppContext';
 
 interface OptimizedParallaxProps {
@@ -35,8 +34,8 @@ export default function OptimizedParallax({
     offset: ['start end', 'end start']
   });
 
-  const animationSettings = useAnimationSettings();
   const { state } = useApp();
+  const animationSettings = state.animationSettings;
   const gyroscope = useGyroscope({ 
     enabled: enableGyroscope && animationSettings.enableParallax,
     sensitivity: 0.3 

@@ -162,9 +162,8 @@ interface AppProviderProps {
 export function AppProvider({ children }: AppProviderProps) {
   const [state, dispatch] = useReducer(appReducer, initialState);
   
-  // Hooks for automatic state updates (only on client)
+  // Hooks for automatic state updates
   const { currentTheme } = useTimeTheme();
-  const animationSettings = useAnimationSettings();
   
   // Update theme when time changes
   useEffect(() => {
@@ -173,12 +172,45 @@ export function AppProvider({ children }: AppProviderProps) {
     }
   }, [currentTheme]);
   
-  // Update animation settings based on performance
+  // Update animation settings based on performance (client-side only)
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      dispatch({ type: 'UPDATE_ANIMATION_SETTINGS', payload: animationSettings });
-    }
-  }, [animationSettings]);
+    if (typeof window === 'undefined') return;
+
+    const getPerformanceSettings = () => {
+      try {
+        const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const reducedMotion = mediaQuery.matches;
+        
+        // Simple performance detection
+        const connection = (navigator as any).connection;
+        const slowConnection = connection && (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g');
+        const lowMemory = (navigator as any).deviceMemory && (navigator as any).deviceMemory <= 2;
+        const lowConcurrency = navigator.hardwareConcurrency <= 2;
+        
+        const isLowPower = reducedMotion || slowConnection || lowMemory || lowConcurrency;
+
+        return {
+          enableComplexAnimations: !isLowPower,
+          enableParallax: !isLowPower,
+          enableParticles: !isLowPower,
+          animationDuration: isLowPower ? 0.1 : 1,
+          particleCount: isLowPower ? 10 : 75
+        };
+      } catch (error) {
+        // Fallback to default settings
+        return {
+          enableComplexAnimations: true,
+          enableParallax: true,
+          enableParticles: true,
+          animationDuration: 1,
+          particleCount: 75
+        };
+      }
+    };
+
+    const settings = getPerformanceSettings();
+    dispatch({ type: 'UPDATE_ANIMATION_SETTINGS', payload: settings });
+  }, []);
   
   // Load preferences from localStorage
   useEffect(() => {

@@ -9,7 +9,7 @@ interface UseIntersectionObserverOptions {
 
 export function useIntersectionObserver<T extends Element = HTMLDivElement>(
   options: UseIntersectionObserverOptions = {}
-): [RefObject<T>, boolean, IntersectionObserverEntry | null] {
+): [RefObject<T | null>, boolean, IntersectionObserverEntry | null] {
   const {
     threshold = 0.1,
     root = null,

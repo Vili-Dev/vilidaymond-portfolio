@@ -5,6 +5,9 @@ import EnhancedErrorBoundary from "@/components/EnhancedErrorBoundary";
 import { AppProvider } from "@/contexts/AppContext";
 import TimeThemeProvider from "@/components/TimeThemeProvider";
 import { AudioProvider } from "@/components/AudioProvider";
+import CustomCursor from "@/components/CustomCursor";
+import FloatingParticles from "@/components/FloatingParticles";
+import CursorLightEffect from "@/components/CursorLightEffect";
 
 const inter = Inter({
   variable: "--font-body",
@@ -89,6 +92,9 @@ export default function RootLayout({
           <AppProvider>
             <TimeThemeProvider>
               <AudioProvider>
+                <CustomCursor />
+                <FloatingParticles />
+                <CursorLightEffect />
                 {children}
               </AudioProvider>
             </TimeThemeProvider>
