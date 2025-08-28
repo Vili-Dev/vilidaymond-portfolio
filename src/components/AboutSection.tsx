@@ -17,7 +17,7 @@ export default function AboutSection() {
 
 
   return (
-    <section id="about" className="relative py-20 lg:py-32 overflow-hidden">
+    <section id="about" className="relative py-20 lg:py-32 mb-16 lg:mb-24 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-primary-black via-primary-darkGray to-primary-black"></div>
       
       <MistEffect intensity={0.2} speed={1.5} />
@@ -25,7 +25,7 @@ export default function AboutSection() {
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary-red to-transparent"></div>
       
       <ParallaxSection speed={0.3}>
-        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10 justify-center flex">
           <motion.div
             ref={ref}
             variants={staggerContainer}
@@ -130,7 +130,7 @@ export default function AboutSection() {
                         transition={{ duration: 3, repeat: Infinity }}
                         className="w-32 h-32 bg-gradient-to-br from-primary-red to-primary-bloodRed rounded-full flex items-center justify-center"
                       >
-                        <span className="text-2xl font-display text-secondary-white">VD</span>
+                        <span className="text-2xl font-display text-secondary-white">Vili</span>
                       </motion.div>
                     </div>
 

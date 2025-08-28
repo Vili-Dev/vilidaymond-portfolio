@@ -46,13 +46,6 @@ export default function Navigation() {
       >
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16">
           <div className="flex justify-center lg:justify-around items-center h-18 lg:h-24 relative mx-auto">
-            {/* Logo - Desktop */}
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="lg:relative lg:left-auto text-xl lg:text-2xl font-display font-bold"
-            >
-              <span className="gradient-text">Vilidaymond</span>
-            </motion.div>
 
             {/* Navigation Menu - Desktop - Centré */}
             <div className="hidden lg:flex items-center justify-center">
@@ -75,17 +68,6 @@ export default function Navigation() {
               </div>
             </div>
 
-            {/* Contact CTA - Desktop */}
-            <div className="hidden lg:block">
-              <motion.button
-                onClick={() => handleNavClick('#contact')}
-                whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(220, 38, 38, 0.4)" }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-3 bg-gradient-to-r from-primary-red to-primary-darkRed hover:from-primary-darkRed hover:to-accent-crimson text-white font-semibold rounded-lg transition-all duration-300 shadow-lg border border-transparent hover:border-accent-rose"
-              >
-                Let's Talk
-              </motion.button>
-            </div>
 
             {/* Mobile Menu Button */}
             <motion.button
@@ -129,18 +111,6 @@ export default function Navigation() {
                   </motion.button>
                 ))}
 
-                {/* Contact CTA - Mobile */}
-                <motion.button
-                  onClick={() => handleNavClick('#contact')}
-                  initial={{ opacity: 0, scale: 0.8, y: 30 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ delay: 0.8, duration: 0.6 }}
-                  whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(220, 38, 38, 0.5)" }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-12 py-4 bg-gradient-to-r from-primary-red to-primary-darkRed hover:from-primary-darkRed hover:to-accent-crimson text-white font-semibold text-xl rounded-xl shadow-xl mt-8 border border-transparent hover:border-accent-rose transition-all duration-300"
-                >
-                  Let's Talk
-                </motion.button>
               </div>
             </div>
           </motion.div>

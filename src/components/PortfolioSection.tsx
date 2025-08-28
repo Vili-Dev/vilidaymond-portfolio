@@ -110,7 +110,7 @@ export default function PortfolioSection() {
 
 
   return (
-    <section id="portfolio" className="relative py-20 lg:py-32 overflow-hidden">
+    <section id="portfolio" className="relative py-20 lg:py-32 overflow-hidden flex flex-col items-center">
       <div className="absolute inset-0 bg-gradient-to-b from-primary-darkGray via-primary-black to-primary-darkGray"></div>
       
       <FogOverlay density={0.08} animated={true} />
@@ -128,7 +128,7 @@ export default function PortfolioSection() {
               <span className="text-secondary-white">My</span>{' '}
               <span className="gradient-text">Portfolio</span>
             </h2>
-            <p className="text-lg text-secondary-lightGray max-w-2xl mx-auto">
+            <p className="text-lg text-secondary-lightGray mx-auto">
               A showcase of AI-generated artworks, ComfyUI workflows, and Photoshop enhancements 
               that demonstrate the fusion of artificial intelligence and human creativity.
             </p>

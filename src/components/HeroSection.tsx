@@ -81,9 +81,9 @@ export default function HeroSection() {
         transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
         className="relative z-10 text-center px-4 sm:px-3 lg:px-12 xl:px-16 transition-transform duration-300 ease-out w-full max-w-6xl mx-auto"
         style={{
-          paddingTop: '5vh',
-          paddingBottom: '5vh',
-          minHeight: '70vh',
+          paddingTop: '2vh',
+          paddingBottom: '3vh',
+          minHeight: '65vh',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center'
@@ -93,17 +93,9 @@ export default function HeroSection() {
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="mb-8"
+          className="mb-6"
         >
           <h1 className="font-display text-4xl sm:text-6xl lg:text-8xl font-bold mb-3 text-shadow">
-            <motion.span
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-              className="block text-secondary-white"
-            >
-              
-            </motion.span>
             <motion.span
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -122,6 +114,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
           className="mb-12 justify-center flex"
+          style={{ marginTop: '2rem' }}
         >
           <div className="max-w-3xl mx-auto">
             <motion.p
