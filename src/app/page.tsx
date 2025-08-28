@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
-import ParticleSystem from '@/components/ParticleSystem';
+import UnifiedParticleSystem from '@/components/UnifiedParticleSystem';
 import LazySection from '@/components/LazySection';
 
 // Lazy load sections that are below the fold
@@ -13,7 +13,13 @@ const Footer = lazy(() => import('@/components/Footer'));
 export default function Home() {
   return (
     <div className="relative">
-      <ParticleSystem particleCount={75} />
+      <UnifiedParticleSystem 
+        config={{
+          type: 'networked',
+          count: 75,
+          effects: { glow: false, connections: true, trails: true }
+        }}
+      />
       <Navigation />
       <HeroSection />
       

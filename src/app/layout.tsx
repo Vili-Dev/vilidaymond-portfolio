@@ -5,9 +5,8 @@ import EnhancedErrorBoundary from "@/components/EnhancedErrorBoundary";
 import { AppProvider } from "@/contexts/AppContext";
 import TimeThemeProvider from "@/components/TimeThemeProvider";
 import { AudioProvider } from "@/components/AudioProvider";
-import CustomCursor from "@/components/CustomCursor";
-import FloatingParticles from "@/components/FloatingParticles";
-import CursorLightEffect from "@/components/CursorLightEffect";
+import UnifiedCursor from "@/components/UnifiedCursor";
+import UnifiedParticleSystem from "@/components/UnifiedParticleSystem";
 
 const inter = Inter({
   variable: "--font-body",
@@ -92,9 +91,21 @@ export default function RootLayout({
           <AppProvider>
             <TimeThemeProvider>
               <AudioProvider>
-                <CustomCursor />
-                <FloatingParticles />
-                <CursorLightEffect />
+                <UnifiedCursor 
+                  config={{
+                    showCursor: true,
+                    showLightEffect: true,
+                    lightIntensity: 0.6,
+                    trailEffect: true
+                  }}
+                />
+                <UnifiedParticleSystem 
+                  config={{
+                    type: 'floating',
+                    count: 50,
+                    effects: { glow: true, connections: false, trails: false }
+                  }}
+                />
                 {children}
               </AudioProvider>
             </TimeThemeProvider>
