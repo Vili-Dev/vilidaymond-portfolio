@@ -17,7 +17,7 @@ export default function AboutSection() {
 
 
   return (
-    <section id="about" className="relative py-20 lg:py-32 mb-16 lg:mb-24 overflow-hidden">
+    <section id="about" className="relative py-20 lg:py-32 mt-32 lg:mt-40 mb-32 lg:mb-40">
       <div className="absolute inset-0 bg-gradient-to-b from-primary-black via-primary-darkGray to-primary-black"></div>
       
       <MistEffect intensity={0.2} speed={1.5} />

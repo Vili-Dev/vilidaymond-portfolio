@@ -110,7 +110,7 @@ export default function PortfolioSection() {
 
 
   return (
-    <section id="portfolio" className="relative py-20 lg:py-32 overflow-hidden flex flex-col items-center">
+    <section id="portfolio" className="relative py-20 lg:py-32 flex flex-col items-center">
       <div className="absolute inset-0 bg-gradient-to-b from-primary-darkGray via-primary-black to-primary-darkGray"></div>
       
       <FogOverlay density={0.08} animated={true} />
@@ -242,7 +242,7 @@ export default function PortfolioSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.8 }}
-            className="text-center mt-24 max-w-lg mx-auto"
+            className="text-center mt-24 w-full"
           >
             <LiquidGradient>
               <MorphingButton morphType="pulse">
