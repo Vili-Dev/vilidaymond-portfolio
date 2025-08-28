@@ -79,13 +79,13 @@ export default function ContactSection() {
 
 
   return (
-    <section id="contact" className="relative py-20 lg:py-32 overflow-hidden">
+    <section id="contact" className="relative py-20 lg:py-32" style={{ marginTop: '50px', marginBottom: '50px' }}>
       <div className="absolute inset-0 bg-gradient-to-b from-primary-black via-primary-darkGray to-primary-black"></div>
       
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary-red to-transparent"></div>
       
       <ParallaxSection speed={0.5}>
-        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10 items-center flex flex-col">
           <motion.div
             ref={ref}
             variants={staggerContainer}

@@ -110,7 +110,7 @@ export default function PortfolioSection() {
 
 
   return (
-    <section id="portfolio" className="relative py-20 lg:py-32 flex flex-col items-center">
+    <section id="portfolio" className="relative py-20 lg:py-32 flex flex-col items-center" style={{ marginTop: '50px' }}>
       <div className="absolute inset-0 bg-gradient-to-b from-primary-darkGray via-primary-black to-primary-darkGray"></div>
       
       <FogOverlay density={0.08} animated={true} />

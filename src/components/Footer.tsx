@@ -32,12 +32,12 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-gradient-to-t from-primary-black to-primary-darkGray border-t border-secondary-gray/20">
+    <footer className="relative bg-gradient-to-t from-primary-black to-primary-darkGray border-t border-secondary-gray/20 flex items-center justify-center">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8">
           
           {/* Brand Section */}
-          <div className="text-center lg:text-left">
+          <div className="text-center lg:text-center">
             <motion.div
               whileHover={{ scale: 1.05 }}
               className="mb-6"
@@ -72,7 +72,7 @@ export default function Footer() {
                     href={social.href}
                     whileHover={{ scale: 1.2, y: -4 }}
                     whileTap={{ scale: 0.9 }}
-                    className="relative flex flex-col items-center p-4 rounded-xl bg-primary-darkGray/50 hover:bg-primary-red/10 border border-secondary-gray/30 hover:border-primary-red/50 transition-all duration-300"
+                    className="relative flex flex-col items-center p-4 transition-all duration-300" style={{ marginTop: '10px' }}
                     aria-label={`Visit ${social.name}`}
                     target={social.href.startsWith('http') ? '_blank' : undefined}
                     rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
@@ -94,7 +94,7 @@ export default function Footer() {
           </div>
 
           {/* Back to Top & Info Section */}
-          <div className="text-center lg:text-right">
+          <div className="text-center lg:text-center flex flex-col items-center">
             <motion.button
               onClick={scrollToTop}
               whileHover={{ scale: 1.1, y: -2 }}
@@ -105,11 +105,11 @@ export default function Footer() {
             </motion.button>
 
             <div className="space-y-3">
-              <div className="flex items-center justify-center lg:justify-end space-x-2 text-secondary-lightGray text-sm">
+              <div className="flex items-center justify-center lg:justify-center space-x-2 text-secondary-lightGray text-sm">
                 <span>© {currentYear} Vilidaymond</span>
               </div>
               
-              <div className="flex items-center justify-center lg:justify-end space-x-2 text-secondary-lightGray text-sm">
+              <div className="flex items-center justify-center lg:justify-center space-x-2 text-secondary-lightGray text-sm">
                 <span>Crafted with</span>
                 <motion.div
                   animate={{ scale: [1, 1.2, 1] }}
