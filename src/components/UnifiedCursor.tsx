@@ -45,8 +45,8 @@ interface TrailingParticleProps {
 function TrailingParticle({ cursorPos, delay, color, intensity }: TrailingParticleProps) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const springX = useSpring(x, { stiffness: 20, damping: 15 });
-  const springY = useSpring(y, { stiffness: 20, damping: 15 });
+  const springX = useSpring(x, { stiffness: 15, damping: 20 });
+  const springY = useSpring(y, { stiffness: 15, damping: 20 });
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -101,27 +101,39 @@ export default function UnifiedCursor({ config = {} }: UnifiedCursorProps) {
   
   const cursorRef = useRef<HTMLDivElement>(null);
   
-  // Motion values for smooth light effect
+  // Motion values for smooth light effect - reduce spring stiffness for Firefox
   const lightX = useMotionValue(0);
   const lightY = useMotionValue(0);
-  const springLightX = useSpring(lightX, { stiffness: 50, damping: 20 });
-  const springLightY = useSpring(lightY, { stiffness: 50, damping: 20 });
+  const springLightX = useSpring(lightX, { stiffness: 30, damping: 25 });
+  const springLightY = useSpring(lightY, { stiffness: 30, damping: 25 });
 
   const shouldRender = performance.shouldRender && performance.enableComplexAnimations;
 
+  const moveTimerRef = useRef<NodeJS.Timeout>();
+  const lastMoveTime = useRef<number>(0);
+  const isFirefox = typeof window !== 'undefined' && navigator.userAgent.toLowerCase().includes('firefox');
+  
   const handleMouseMove = useCallback((e: MouseEvent) => {
+    // Throttle for Firefox to reduce lag
+    const now = Date.now();
+    if (isFirefox && now - lastMoveTime.current < 16) return; // ~60fps for Firefox
+    lastMoveTime.current = now;
+    
     const newPosition = { x: e.clientX, y: e.clientY };
     setPosition(newPosition);
     
     if (mergedConfig.showLightEffect && shouldRender) {
+      // Set directly without spring delay for better responsiveness
       lightX.set(e.clientX);
       lightY.set(e.clientY);
       
       setIsMoving(true);
-      const moveTimer = setTimeout(() => setIsMoving(false), 100);
-      return () => clearTimeout(moveTimer);
+      if (moveTimerRef.current) {
+        clearTimeout(moveTimerRef.current);
+      }
+      moveTimerRef.current = setTimeout(() => setIsMoving(false), 100);
     }
-  }, [lightX, lightY, mergedConfig.showLightEffect, shouldRender]);
+  }, [lightX, lightY, mergedConfig.showLightEffect, shouldRender, isFirefox]);
 
   const handleMouseDown = useCallback(() => {
     setIsClicking(true);
@@ -229,9 +241,8 @@ export default function UnifiedCursor({ config = {} }: UnifiedCursorProps) {
           ref={cursorRef}
           className="fixed pointer-events-none z-50 rounded-full mix-blend-difference"
           style={{
-            left: position.x,
-            top: position.y,
-            transform: 'translate(-50%, -50%)',
+            left: position.x - (getCursorStyles().width || 20) / 2,
+            top: position.y - (getCursorStyles().height || 20) / 2,
             ...getCursorStyles(),
           }}
           animate={{
@@ -239,8 +250,8 @@ export default function UnifiedCursor({ config = {} }: UnifiedCursorProps) {
           }}
           transition={{
             type: 'spring',
-            stiffness: 500,
-            damping: 30,
+            stiffness: 300,
+            damping: 25,
           }}
         />
       )}
@@ -335,13 +346,13 @@ export default function UnifiedCursor({ config = {} }: UnifiedCursorProps) {
             />
           </motion.div>
 
-          {/* Trailing particles */}
+          {/* Trailing particles - reduce count for better performance */}
           {mergedConfig.trailEffect && performance.animationQuality !== 'low' && 
-            Array.from({ length: performance.animationQuality === 'high' ? 5 : 3 }).map((_, i) => (
+            Array.from({ length: performance.animationQuality === 'high' ? 3 : 2 }).map((_, i) => (
               <TrailingParticle
                 key={i}
                 cursorPos={position}
-                delay={i * 0.1}
+                delay={i * 0.15}
                 color={mergedConfig.lightColor}
                 intensity={mergedConfig.lightIntensity}
               />
