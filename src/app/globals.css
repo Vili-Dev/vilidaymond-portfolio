@@ -241,6 +241,52 @@ body {
   image-rendering: crisp-edges;
 }
 
+/* Enhanced particle performance optimizations */
+.particle {
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.particle-container {
+  contain: layout style paint;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Mobile particle optimizations */
+@media (max-width: 768px) {
+  .particle {
+    animation-duration: 40s !important;
+    animation-timing-function: linear;
+  }
+  
+  .fog-layer {
+    display: none;
+  }
+  
+  .particle-container {
+    animation-duration: 40s !important;
+  }
+}
+
+/* Firefox-specific optimizations */
+@-moz-document url-prefix() {
+  .particle {
+    animation-timing-function: linear;
+    filter: none !important;
+  }
+  
+  .particle-container {
+    animation-timing-function: linear;
+  }
+  
+  .fog-layer {
+    opacity: 0.5;
+  }
+}
+
 /* Battery-aware animations */
 .battery-conscious {
   animation-duration: 0.3s;

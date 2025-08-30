@@ -3,6 +3,7 @@
 import { useEffect, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useApp } from '@/contexts/AppContext';
+import { usePerformanceSettings } from '@/hooks/usePerformanceSettings';
 
 interface SmokeParticle {
   x: number;
@@ -32,10 +33,16 @@ export function SmokeEffect({
   const animationRef = useRef<number>();
   const particlesRef = useRef<SmokeParticle[]>([]);
   const { state } = useApp();
+  const performance = usePerformanceSettings(particleCount);
 
   const shouldRender = useMemo(() => {
     return state.animationSettings.enableComplexAnimations && !state.preferences.reducedMotion;
   }, [state.animationSettings.enableComplexAnimations, state.preferences.reducedMotion]);
+
+  const effectiveParticleCount = useMemo(() => {
+    // Use the performance-optimized particle count directly
+    return performance.particleCount || particleCount;
+  }, [particleCount, performance.particleCount]);
 
   useEffect(() => {
     if (!shouldRender || typeof window === 'undefined') return;
@@ -130,7 +137,7 @@ export function SmokeEffect({
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       // Add new particles
-      if (particlesRef.current.length < particleCount) {
+      if (particlesRef.current.length < effectiveParticleCount) {
         particlesRef.current.push(createParticle());
       }
       
@@ -155,15 +162,18 @@ export function SmokeEffect({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [shouldRender, intensity, color, particleCount, direction]);
+  }, [shouldRender, intensity, color, effectiveParticleCount, direction]);
 
   if (!shouldRender) return null;
 
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 pointer-events-none z-10"
-      style={{ mixBlendMode: 'screen' }}
+      className="absolute inset-0 pointer-events-none z-10 particle-canvas gpu-accelerated"
+      style={{ 
+        mixBlendMode: 'screen',
+        willChange: 'transform, opacity'
+      }}
     />
   );
 }
@@ -180,16 +190,24 @@ export function MistEffect({
   speed = 1 
 }: MistEffectProps) {
   const { state } = useApp();
+  const performance = usePerformanceSettings();
 
   const shouldRender = useMemo(() => {
     return state.animationSettings.enableComplexAnimations && !state.preferences.reducedMotion;
   }, [state.animationSettings.enableComplexAnimations, state.preferences.reducedMotion]);
 
+  const layerCount = useMemo(() => {
+    // Use performance.animationQuality instead of device flags to avoid hydration issues
+    if (performance.animationQuality === 'low') return 1;
+    if (performance.animationQuality === 'medium') return 2;
+    return 3;
+  }, [performance.animationQuality]);
+
   if (!shouldRender) return null;
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
-      {Array.from({ length: 3 }).map((_, i) => (
+    <div className={`absolute inset-0 overflow-hidden pointer-events-none z-10 ${performance.animationQuality === 'low' ? 'fog-layer' : ''}`}>
+      {Array.from({ length: layerCount }).map((_, i) => (
         <motion.div
           key={i}
           className="absolute inset-0"
@@ -202,14 +220,15 @@ export function MistEffect({
             x: ['-50%', '150%', '-50%'],
           }}
           transition={{
-            duration: 20 / speed,
+            duration: performance.animationQuality === 'low' ? 30 / speed : 20 / speed,
             repeat: Infinity,
             ease: "linear",
             delay: i * 7,
           }}
           style={{
-            filter: `blur(${20 + i * 10}px)`,
+            filter: performance.enableBlur ? `blur(${20 + i * 10}px)` : 'none',
             opacity: intensity,
+            willChange: 'transform, opacity',
           }}
         />
       ))}
@@ -229,10 +248,11 @@ export function FogOverlay({
   animated = true 
 }: FogOverlayProps) {
   const { state } = useApp();
+  const performance = usePerformanceSettings();
 
   const shouldRender = useMemo(() => {
-    return state.animationSettings.enableComplexAnimations && !state.preferences.reducedMotion;
-  }, [state.animationSettings.enableComplexAnimations, state.preferences.reducedMotion]);
+    return state.animationSettings.enableComplexAnimations && !state.preferences.reducedMotion && performance.animationQuality !== 'low';
+  }, [state.animationSettings.enableComplexAnimations, state.preferences.reducedMotion, performance.animationQuality]);
 
   if (!shouldRender) return null;
 
@@ -253,8 +273,9 @@ export function FogOverlay({
           ease: "easeInOut",
         }}
         style={{
-          filter: 'blur(40px)',
+          filter: performance.enableBlur ? 'blur(40px)' : 'none',
           opacity: density,
+          willChange: 'transform, opacity',
         }}
       />
       
@@ -273,8 +294,9 @@ export function FogOverlay({
           ease: "easeInOut",
         }}
         style={{
-          filter: 'blur(60px)',
+          filter: performance.enableBlur ? 'blur(60px)' : 'none',
           opacity: density * 0.7,
+          willChange: 'transform, opacity',
         }}
       />
     </div>
@@ -293,16 +315,23 @@ export function DepthHaze({
   intensity = 0.8 
 }: DepthHazeProps) {
   const { state } = useApp();
+  const performance = usePerformanceSettings();
 
   const shouldRender = useMemo(() => {
     return state.animationSettings.enableComplexAnimations && !state.preferences.reducedMotion;
   }, [state.animationSettings.enableComplexAnimations, state.preferences.reducedMotion]);
 
+  const effectiveLayers = useMemo(() => {
+    if (performance.animationQuality === 'low') return Math.min(2, layers);
+    if (performance.animationQuality === 'medium') return Math.min(3, layers);
+    return layers;
+  }, [layers, performance.animationQuality]);
+
   if (!shouldRender) return null;
 
   return (
     <div className="absolute inset-0 pointer-events-none z-5">
-      {Array.from({ length: layers }).map((_, i) => {
+      {Array.from({ length: effectiveLayers }).map((_, i) => {
         const opacity = (1 - i / layers) * intensity;
         const blur = i * 10 + 5;
         const scale = 1 + i * 0.1;
@@ -327,9 +356,10 @@ export function DepthHaze({
               delay: i * 2,
             }}
             style={{
-              filter: `blur(${blur}px)`,
+              filter: performance.enableBlur ? `blur(${blur}px)` : 'none',
               opacity,
               transformOrigin: 'center bottom',
+              willChange: 'transform, opacity',
             }}
           />
         );

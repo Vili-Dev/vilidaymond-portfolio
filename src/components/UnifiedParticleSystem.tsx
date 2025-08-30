@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useMemo, useCallback } from 'react';
+import { useEffect, useRef, useMemo, useCallback, useState } from 'react';
 import { useCanvas } from '@/hooks/useCanvas';
 import { useAnimationFrame } from '@/hooks/useAnimationFrame';
 import { usePerformanceSettings } from '@/hooks/usePerformanceSettings';
@@ -60,6 +60,8 @@ export default function UnifiedParticleSystem({
   const particlesRef = useRef<Particle[]>([]);
   const performance = usePerformanceSettings(mergedConfig.count);
   const { canvasRef, context, clearCanvas, getCanvasDimensions } = useCanvas();
+  const [isInViewport, setIsInViewport] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const effectiveConfig = useMemo(() => ({
     ...mergedConfig,
@@ -171,7 +173,7 @@ export default function UnifiedParticleSystem({
     }
   }, [effectiveConfig.effects.connections]);
 
-  const animate = useCallback((deltaTime: number) => {
+  const animate = useCallback((_deltaTime: number) => {
     if (!context) return;
 
     clearCanvas();
@@ -187,9 +189,25 @@ export default function UnifiedParticleSystem({
   }, [context, clearCanvas, updateParticle, drawParticle, drawConnections]);
 
   const { start, stop } = useAnimationFrame(animate, {
-    fps: performance.animationQuality === 'low' ? 30 : 60,
-    shouldRun: performance.shouldRender
+    fps: performance.frameRate,
+    shouldRun: performance.shouldRender && isInViewport
   });
+
+  // Intersection Observer for viewport detection
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInViewport(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   // Initialize particles when config changes
   useEffect(() => {
@@ -198,26 +216,34 @@ export default function UnifiedParticleSystem({
     }
   }, [initializeParticles, performance.shouldRender]);
 
-  // Start/stop animation based on performance settings
+  // Start/stop animation based on performance settings and viewport
   useEffect(() => {
-    if (performance.shouldRender) {
+    if (performance.shouldRender && isInViewport) {
       start();
     } else {
       stop();
     }
 
     return () => stop();
-  }, [performance.shouldRender, start, stop]);
+  }, [performance.shouldRender, isInViewport, start, stop]);
 
   if (!performance.shouldRender) {
     return null;
   }
 
   return (
-    <canvas
-      ref={canvasRef}
-      className={`fixed inset-0 pointer-events-none z-10 ${className}`}
-      style={{ mixBlendMode: 'screen' }}
-    />
+    <div
+      ref={containerRef}
+      className={`fixed inset-0 pointer-events-none z-10 ${className} particle-container`}
+    >
+      <canvas
+        ref={canvasRef}
+        className="particle-canvas w-full h-full gpu-accelerated"
+        style={{ 
+          mixBlendMode: 'screen',
+          willChange: isInViewport ? 'transform, opacity' : 'auto'
+        }}
+      />
+    </div>
   );
 }
