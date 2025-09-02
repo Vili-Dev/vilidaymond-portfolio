@@ -85,10 +85,10 @@ export default function RootLayout({
         <meta name="color-scheme" content="dark" />
         
         {/* Favicon pour tous les navigateurs et OS */}
-        <link rel="icon" href="/favicon.ico?v=3" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/icon-192.png?v=3" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/icon-192.png?v=3" />
-        <link rel="shortcut icon" href="/favicon.ico?v=3" />
+        <link rel="icon" href="/favicon.ico?v=4" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/icon-192.png?v=4" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/icon-192.png?v=4" />
+        <link rel="shortcut icon" href="/favicon.ico?v=4" />
         
         {/* Windows desktop et taskbar */}
         <meta name="msapplication-TileImage" content="/icon-512.png" />
