@@ -81,8 +81,27 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <meta name="theme-color" content="#0A0A0A" />
+        <meta name="theme-color" content="#000000" />
         <meta name="color-scheme" content="dark" />
+        
+        {/* Favicon avec cache busting */}
+        <link rel="icon" type="image/png" sizes="32x32" href="/icon-192.png?v=2" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/icon-192.png?v=2" />
+        <link rel="shortcut icon" href="/icon-192.png?v=2" />
+        
+        {/* PWA Manifest */}
+        <link rel="manifest" href="/manifest.json" />
+        
+        {/* iOS PWA Support */}
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Portfolio" />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
+        <link rel="apple-touch-startup-image" href="/icon-512.png" />
+        
+        {/* Additional PWA Meta Tags */}
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="application-name" content="Portfolio" />
       </head>
       <body
         className={`${inter.variable} ${playfairDisplay.variable} ${jetBrainsMono.variable} antialiased`}

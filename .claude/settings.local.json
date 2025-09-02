@@ -3,7 +3,10 @@
     "allow": [
       "Bash(npm run build:*)",
       "Bash(grep:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npm install:*)",
+      "Bash(copy:*)",
+      "Bash(cp:*)"
     ],
     "deny": [],
     "ask": []

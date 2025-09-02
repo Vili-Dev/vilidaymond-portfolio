@@ -45,7 +45,12 @@ export function usePerformanceSettings(baseParticleCount: number = 50): Performa
         particleCount = 15; // Reduced for mobile
       } else if (isFirefox) {
         particleCount = 25; // Reduced for Firefox
+      } else {
+        particleCount = 30; // Desktop optimized count
       }
+    } else {
+      // Default to 30 particles for SSR
+      particleCount = 30;
     }
     
     // Apply additional multipliers
