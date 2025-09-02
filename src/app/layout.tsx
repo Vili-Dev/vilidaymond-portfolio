@@ -84,10 +84,15 @@ export default function RootLayout({
         <meta name="theme-color" content="#000000" />
         <meta name="color-scheme" content="dark" />
         
-        {/* Favicon avec cache busting */}
-        <link rel="icon" type="image/png" sizes="32x32" href="/icon-192.png?v=2" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/icon-192.png?v=2" />
-        <link rel="shortcut icon" href="/icon-192.png?v=2" />
+        {/* Favicon pour tous les navigateurs et OS */}
+        <link rel="icon" href="/favicon.ico?v=3" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/icon-192.png?v=3" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/icon-192.png?v=3" />
+        <link rel="shortcut icon" href="/favicon.ico?v=3" />
+        
+        {/* Windows desktop et taskbar */}
+        <meta name="msapplication-TileImage" content="/icon-512.png" />
+        <meta name="msapplication-TileColor" content="#000000" />
         
         {/* PWA Manifest */}
         <link rel="manifest" href="/manifest.json" />
