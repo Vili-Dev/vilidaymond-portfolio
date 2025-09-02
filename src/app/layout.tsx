@@ -27,23 +27,23 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://vilidaymond.netlify.app'),
-  title: "Vili Daymond | Digital Artist & Creative Visionary",
-  description: "Explore the dark, artistic world of Vili Daymond. Digital artist specializing in mysterious, gothic aesthetics and creative visual storytelling.",
+  metadataBase: new URL('https://vili-portfolio.netlify.app'),
+  title: "Vilidaymond | Digital Artist",
+  description: "Gallery of Vilidaymond arts.",
   keywords: ["digital artist", "gothic art", "dark aesthetics", "creative visionary", "portfolio", "mysterious art"],
-  authors: [{ name: "Vili Daymond" }],
-  creator: "Vili Daymond",
+  authors: [{ name: "Vilidaymond" }],
+  creator: "Vilidaymond",
   openGraph: {
-    title: "Vili Daymond | Digital Artist & Creative Visionary",
-    description: "Explore the dark, artistic world of Vili Daymond. Digital artist specializing in mysterious, gothic aesthetics.",
+    title: "Vilidaymond | Digital Artist",
+    description: "Gallery of Vilidaymond arts.",
     url: "https://vilidaymond.netlify.app",
-    siteName: "Vili Daymond Portfolio",
+    siteName: "Vilidaymond Gallery",
     images: [
       {
         url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Vili Daymond - Digital Artist Portfolio",
+        width: 512,
+        height: 512,
+        alt: "Vilidaymond - Digital Artist",
       },
     ],
     locale: "en_US",
@@ -51,8 +51,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Vili Daymond | Digital Artist",
-    description: "Dark, mysterious digital art and creative visionary work.",
+    title: "Vilidaymond | Digital Artist",
+    description: "Gallery of Vilidaymond arts.",
     images: ["/og-image.jpg"],
   },
   robots: {
