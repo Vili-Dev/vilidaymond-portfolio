@@ -81,7 +81,7 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <meta name="theme-color" content="#000000" />
+        <meta name="theme-color" content="#0A0A0A" />
         <meta name="color-scheme" content="dark" />
         
         {/* Favicon pour tous les navigateurs et OS */}
@@ -92,7 +92,7 @@ export default function RootLayout({
         
         {/* Windows desktop et taskbar */}
         <meta name="msapplication-TileImage" content="/icon-512.png" />
-        <meta name="msapplication-TileColor" content="#000000" />
+        <meta name="msapplication-TileColor" content="#0A0A0A" />
         
         {/* PWA Manifest */}
         <link rel="manifest" href="/manifest.json" />
