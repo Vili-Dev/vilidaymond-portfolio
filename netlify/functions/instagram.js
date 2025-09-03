@@ -35,7 +35,7 @@ exports.handler = async (event, context) => {
 
     // Fetch from Instagram API
     const response = await fetch(
-      `https://graph.instagram.com/me/media?fields=id,media_type,media_url,permalink,caption,timestamp&limit=12&access_token=${accessToken}`
+      `https://graph.instagram.com/me/media?fields=id,media_type,media_url,permalink,caption,timestamp,thumbnail_url&limit=12&access_token=${accessToken}`
     );
 
     if (!response.ok) {
@@ -109,6 +109,7 @@ exports.handler = async (event, context) => {
         id: 'mock_6',
         media_type: 'IMAGE',
         media_url: 'https://images.unsplash.com/800x1000/?modern,artistic,digital&sig=6',
+        thumbnail_url: 'https://images.unsplash.com/800x1000/?modern,artistic,digital&sig=6',
         permalink: 'https://instagram.com/vilidaymond2',
         caption: 'Digital Art #6',
         timestamp: new Date(Date.now() - 518400000).toISOString()
