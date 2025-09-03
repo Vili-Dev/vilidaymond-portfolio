@@ -141,7 +141,7 @@ export default function PortfolioSection() {
               className="w-full"
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 lg:gap-10 xl:gap-12 max-w-6xl mx-auto justify-items-center">
-                {[...Array(9)].map((_, index) => (
+                {[...Array(6)].map((_, index) => (
                 <div key={index} className="relative overflow-hidden rounded-2xl glass-effect">
                   <div className="aspect-[4/5] bg-gradient-to-br from-secondary-gray to-primary-darkGray animate-pulse">
                     <div className="absolute inset-0 bg-gradient-to-t from-primary-black/60 to-transparent"></div>
