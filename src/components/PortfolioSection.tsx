@@ -173,18 +173,17 @@ export default function PortfolioSection() {
             </motion.div>
           ) : (
             <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"}
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.6 }}
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 lg:gap-10 xl:gap-12 max-w-7xl mx-auto justify-items-center"
             >
-              {console.log('Rendering portfolio items:', portfolioItems.length)}
-              {portfolioItems.map((item) => (
+              {portfolioItems.map((item, index) => (
                 <motion.div
                   key={item.id}
-                  variants={fadeInScale}
-                  transition={defaultTransition}
-                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
                   whileHover={{ y: -10, rotateY: 5, rotateX: 5 }}
                   onClick={() => setSelectedItem(item)}
                   className="group cursor-pointer"
