@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { ExternalLink, Heart, MessageCircle, Instagram } from 'lucide-react';
@@ -11,102 +11,101 @@ import { HolographicEffect, LiquidGradient } from './EnhancedGlowEffects';
 import { MorphingButton } from './MorphingButtons';
 import { FogOverlay } from './AtmosphericEffects';
 
-interface ArtworkItem {
-  id: number;
-  title: string;
-  description: string;
-  category: string;
-  image: string;
-  likes: number;
-  comments: number;
-  featured: boolean;
-  instagramUrl?: string;
+interface InstagramPost {
+  id: string;
+  media_type: 'IMAGE' | 'VIDEO' | 'CAROUSEL_ALBUM';
+  media_url: string;
+  permalink: string;
+  caption?: string;
+  timestamp: string;
+  thumbnail_url?: string;
 }
 
-const portfolioItems: ArtworkItem[] = [
-  {
-    id: 1,
-    title: "Neural Dreams",
-    description: "AI-generated surreal landscapes crafted with ComfyUI workflows",
-    category: "AI Generated",
-    image: "/api/placeholder/400/500",
-    likes: 584,
-    comments: 92,
-    featured: true,
-    instagramUrl: "#"
-  },
-  {
-    id: 2,
-    title: "Photoshop Enhancement",
-    description: "AI base refined with advanced Photoshop techniques",
-    category: "AI + Photoshop",
-    image: "/api/placeholder/400/600",
-    likes: 437,
-    comments: 68,
-    featured: false,
-    instagramUrl: "#"
-  },
-  {
-    id: 3,
-    title: "Character Concept AI",
-    description: "Fantasy character design using custom ComfyUI nodes",
-    category: "Character Design",
-    image: "/api/placeholder/400/500",
-    likes: 726,
-    comments: 134,
-    featured: true,
-    instagramUrl: "#"
-  },
-  {
-    id: 4,
-    title: "Cyberpunk Workflow",
-    description: "Complex ComfyUI workflow for futuristic cityscapes",
-    category: "Workflow Art",
-    image: "/api/placeholder/400/550",
-    likes: 628,
-    comments: 89,
-    featured: false,
-    instagramUrl: "#"
-  },
-  {
-    id: 5,
-    title: "Style Transfer Magic",
-    description: "Custom LoRA training and style transfer techniques",
-    category: "Style Transfer",
-    image: "/api/placeholder/400/480",
-    likes: 512,
-    comments: 75,
-    featured: true,
-    instagramUrl: "#"
-  },
-  {
-    id: 6,
-    title: "AI Portrait Mastery",
-    description: "Hyperrealistic portraits with AI precision and human touch",
-    category: "AI Portraits",
-    image: "/api/placeholder/400/520",
-    likes: 889,
-    comments: 164,
-    featured: false,
-    instagramUrl: "#"
-  },
-];
-
-const categories = ["All", "AI Generated", "AI + Photoshop", "Character Design", "Workflow Art", "Style Transfer", "AI Portraits"];
+interface ArtworkItem {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  instagramUrl: string;
+  timestamp: string;
+}
 
 export default function PortfolioSection() {
   const { fadeInScale, staggerContainer, defaultTransition } = useAnimations();
-  const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedItem, setSelectedItem] = useState<ArtworkItem | null>(null);
+  const [portfolioItems, setPortfolioItems] = useState<ArtworkItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
 
-  const filteredItems = selectedCategory === "All" 
-    ? portfolioItems 
-    : portfolioItems.filter(item => item.category === selectedCategory);
+  // Function to extract title from Instagram caption
+  const extractTitle = (caption: string): string => {
+    if (!caption) return 'Untitled Artwork';
+    
+    // Try to extract first sentence or first meaningful phrase
+    const sentences = caption.split(/[.!?]/);
+    if (sentences[0] && sentences[0].length > 3) {
+      return sentences[0].trim().substring(0, 50);
+    }
+    
+    // Fallback to first words
+    const words = caption.split(' ').slice(0, 6).join(' ');
+    return words.length > 3 ? words : 'Untitled Artwork';
+  };
+
+  // Function to clean Instagram caption for description
+  const extractDescription = (caption: string): string => {
+    if (!caption) return 'AI-generated artwork created with ComfyUI and Photoshop';
+    
+    // Remove hashtags and clean up
+    const cleaned = caption
+      .replace(/#\w+/g, '') // Remove hashtags
+      .replace(/\s+/g, ' ') // Normalize spaces
+      .trim();
+    
+    return cleaned.substring(0, 120) || 'AI-generated artwork created with ComfyUI and Photoshop';
+  };
+
+  // Fetch Instagram posts
+  useEffect(() => {
+    const fetchInstagramPosts = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        const response = await fetch('/api/instagram?limit=12');
+        const data = await response.json();
+        
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to fetch Instagram posts');
+        }
+        
+        // Transform Instagram posts to ArtworkItem format
+        const transformedItems: ArtworkItem[] = data.data.map((post: InstagramPost) => ({
+          id: post.id,
+          title: extractTitle(post.caption || ''),
+          description: extractDescription(post.caption || ''),
+          image: post.media_url,
+          instagramUrl: post.permalink,
+          timestamp: post.timestamp
+        }));
+        
+        setPortfolioItems(transformedItems);
+        console.log('Portfolio items loaded:', transformedItems.length, transformedItems);
+      } catch (err) {
+        console.error('Error fetching Instagram posts:', err);
+        setError(err instanceof Error ? err.message : 'Failed to load portfolio');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInstagramPosts();
+  }, []);
 
 
   return (
@@ -134,37 +133,53 @@ export default function PortfolioSection() {
             </p>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap justify-center gap-6 mb-16 max-w-6xl mx-auto"
-          >
-            {categories.map((category) => (
-              <motion.button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
-                  selectedCategory === category
-                    ? 'bg-primary-red text-secondary-white shadow-lg'
-                    : 'bg-transparent border border-secondary-gray text-secondary-lightGray hover:border-primary-red hover:text-primary-red'
-                }`}
-              >
-                {category}
-              </motion.button>
-            ))}
-          </motion.div>
 
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 lg:gap-10 xl:gap-12 max-w-7xl mx-auto justify-items-center"
-          >
-            <AnimatePresence mode="wait">
-              {filteredItems.map((item) => (
+          {loading ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 lg:gap-10 xl:gap-12 max-w-7xl mx-auto justify-items-center"
+            >
+              {[...Array(6)].map((_, index) => (
+                <div key={index} className="relative overflow-hidden rounded-2xl glass-effect">
+                  <div className="aspect-[4/5] bg-gradient-to-br from-secondary-gray to-primary-darkGray animate-pulse">
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary-black/60 to-transparent"></div>
+                    <div className="absolute bottom-6 left-6 right-6">
+                      <div className="h-6 bg-secondary-gray rounded mb-2 animate-pulse"></div>
+                      <div className="h-4 bg-secondary-darkGray rounded mb-4 animate-pulse"></div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+          ) : error ? (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center max-w-md mx-auto"
+            >
+              <div className="glass-effect rounded-2xl p-8">
+                <h3 className="text-xl text-secondary-white mb-4">Unable to Load Portfolio</h3>
+                <p className="text-secondary-lightGray mb-6">{error}</p>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => window.location.reload()}
+                  className="px-6 py-3 bg-primary-red rounded-full text-secondary-white font-medium hover:bg-primary-darkRed transition-colors duration-300"
+                >
+                  Retry
+                </motion.button>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 lg:gap-10 xl:gap-12 max-w-7xl mx-auto justify-items-center"
+            >
+              {console.log('Rendering portfolio items:', portfolioItems.length)}
+              {portfolioItems.map((item) => (
                 <motion.div
                   key={item.id}
                   variants={fadeInScale}
@@ -177,66 +192,64 @@ export default function PortfolioSection() {
                 >
                   <HolographicEffect>
                     <RippleEffect className="relative overflow-hidden rounded-2xl glass-effect hover:red-glow transition-all duration-300">
-                    <div className="aspect-[4/5] bg-gradient-to-br from-secondary-gray to-primary-darkGray">
-                      <div className="absolute inset-0 bg-gradient-to-t from-primary-black/60 to-transparent"></div>
-                      
-                      {item.featured && (
-                        <div className="absolute top-4 left-4 z-10">
-                          <span className="px-3 py-1 bg-primary-red text-secondary-white text-xs font-medium rounded-full">
-                            Featured
-                          </span>
-                        </div>
-                      )}
-
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-primary-black/50">
-                        <motion.div
-                          initial={{ scale: 0 }}
-                          whileHover={{ scale: 1.1 }}
-                          className="p-4 bg-primary-red rounded-full"
-                        >
-                          <ExternalLink className="w-6 h-6 text-secondary-white" />
-                        </motion.div>
-                      </div>
-
-                      <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                        <h3 className="font-display text-xl font-semibold mb-2 group-hover:text-primary-red transition-colors duration-300">
-                          {item.title}
-                        </h3>
-                        <p className="text-secondary-lightGray text-sm mb-4 line-clamp-2">
-                          {item.description}
-                        </p>
+                      <div className="aspect-[4/5] relative bg-gradient-to-br from-secondary-gray to-primary-darkGray">
+                        <img 
+                          src={item.image} 
+                          alt={item.title}
+                          className="w-full h-full object-cover relative z-10"
+                          onError={(e) => {
+                            // Fallback to gradient background if image fails to load
+                            (e.target as HTMLImageElement).style.display = 'none';
+                          }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-primary-black/80 to-transparent z-20"></div>
                         
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-4 text-sm text-secondary-gray">
-                            <span className="flex items-center gap-1">
-                              <Heart className="w-4 h-4" />
-                              {item.likes}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <MessageCircle className="w-4 h-4" />
-                              {item.comments}
-                            </span>
-                          </div>
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-primary-black/50 z-30">
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            whileHover={{ scale: 1.1 }}
+                            className="p-4 bg-primary-red rounded-full"
+                          >
+                            <ExternalLink className="w-6 h-6 text-secondary-white" />
+                          </motion.div>
+                        </div>
+
+                        <div className="absolute bottom-0 left-0 right-0 p-6 text-white z-30">
+                          <h3 className="font-display text-xl font-semibold mb-2 group-hover:text-primary-red transition-colors duration-300">
+                            {item.title}
+                          </h3>
+                          <p className="text-secondary-lightGray text-sm mb-4 line-clamp-2">
+                            {item.description}
+                          </p>
                           
-                          {item.instagramUrl && (
+                          <div className="flex items-center justify-between">
+                            <div className="text-xs text-secondary-gray">
+                              {new Date(item.timestamp).toLocaleDateString('en-US', { 
+                                month: 'short', 
+                                day: 'numeric' 
+                              })}
+                            </div>
+                            
                             <motion.a
                               href={item.instagramUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
                               whileHover={{ scale: 1.2, color: '#DC2626' }}
                               onClick={(e) => e.stopPropagation()}
                               className="text-secondary-lightGray hover:text-primary-red transition-colors duration-200"
+                              aria-label="View on Instagram"
                             >
                               <Instagram className="w-4 h-4" />
                             </motion.a>
-                          )}
+                          </div>
                         </div>
                       </div>
-                    </div>
                     </RippleEffect>
                   </HolographicEffect>
                 </motion.div>
               ))}
-            </AnimatePresence>
-          </motion.div>
+            </motion.div>
+          )}
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -271,9 +284,17 @@ export default function PortfolioSection() {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div className="aspect-[4/5] bg-gradient-to-br from-secondary-gray to-primary-darkGray rounded-xl overflow-hidden">
-                  <div className="w-full h-full flex items-center justify-center">
-                    <span className="text-secondary-lightGray">Artwork Preview</span>
+                <div className="aspect-[4/5] rounded-xl overflow-hidden relative bg-gradient-to-br from-secondary-gray to-primary-darkGray flex items-center justify-center">
+                  <img 
+                    src={selectedItem.image} 
+                    alt={selectedItem.title}
+                    className="w-full h-full object-cover relative z-10"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.display = 'none';
+                    }}
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center z-0">
+                    <span className="text-secondary-lightGray">Loading artwork...</span>
                   </div>
                 </div>
                 
@@ -286,33 +307,30 @@ export default function PortfolioSection() {
                   </p>
                   
                   <div className="flex items-center gap-6 mb-6">
-                    <span className="px-3 py-1 bg-primary-red text-secondary-white text-sm font-medium rounded-full">
-                      {selectedItem.category}
-                    </span>
-                    <div className="flex items-center space-x-4 text-secondary-gray">
-                      <span className="flex items-center gap-1">
-                        <Heart className="w-5 h-5" />
-                        {selectedItem.likes}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <MessageCircle className="w-5 h-5" />
-                        {selectedItem.comments}
+                    <div className="text-secondary-gray">
+                      <span className="text-sm">Posted on </span>
+                      <span className="text-secondary-lightGray">
+                        {new Date(selectedItem.timestamp).toLocaleDateString('en-US', { 
+                          year: 'numeric',
+                          month: 'long', 
+                          day: 'numeric' 
+                        })}
                       </span>
                     </div>
                   </div>
                   
                   <div className="flex gap-4">
-                    {selectedItem.instagramUrl && (
-                      <motion.a
-                        href={selectedItem.instagramUrl}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="flex items-center gap-2 px-6 py-3 bg-primary-red rounded-full text-secondary-white font-medium hover:bg-primary-darkRed transition-colors duration-300"
-                      >
-                        <Instagram className="w-5 h-5" />
-                        View on Instagram
-                      </motion.a>
-                    )}
+                    <motion.a
+                      href={selectedItem.instagramUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="flex items-center gap-2 px-6 py-3 bg-primary-red rounded-full text-secondary-white font-medium hover:bg-primary-darkRed transition-colors duration-300"
+                    >
+                      <Instagram className="w-5 h-5" />
+                      View on Instagram
+                    </motion.a>
                     
                     <motion.button
                       onClick={() => setSelectedItem(null)}
