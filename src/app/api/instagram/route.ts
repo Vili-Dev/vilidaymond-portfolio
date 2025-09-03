@@ -149,7 +149,7 @@ export async function GET(request: NextRequest) {
 // Helper functions
 function processInstagramData(data: InstagramPost[]): InstagramPost[] {
   return data
-    .filter(post => post.media_type === 'IMAGE' || post.media_type === 'CAROUSEL_ALBUM')
+    .filter(post => post.media_type === 'IMAGE' || post.media_type === 'CAROUSEL_ALBUM' || post.media_type === 'VIDEO')
     .map(post => ({
       id: post.id,
       media_type: post.media_type,

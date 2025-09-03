@@ -44,9 +44,9 @@ exports.handler = async (event, context) => {
 
     const data = await response.json();
 
-    // Filter only images and carousels
+    // Filter images, carousels, and videos
     const processedPosts = data.data
-      .filter(post => post.media_type === 'IMAGE' || post.media_type === 'CAROUSEL_ALBUM')
+      .filter(post => post.media_type === 'IMAGE' || post.media_type === 'CAROUSEL_ALBUM' || post.media_type === 'VIDEO')
       .slice(0, 12);
 
     return {

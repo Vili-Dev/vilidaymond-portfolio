@@ -109,13 +109,13 @@ export default function PortfolioSection() {
 
 
   return (
-    <section id="portfolio" className="relative py-20 lg:py-32 flex flex-col items-center" style={{ marginTop: '50px' }}>
+    <section id="portfolio" className="relative py-20 lg:py-32 flex flex-col items-center" style={{ marginTop: '50px', textAlign: 'center' }}>
       <div className="absolute inset-0 bg-gradient-to-b from-primary-darkGray via-primary-black to-primary-darkGray"></div>
       
       <FogOverlay density={0.08} animated={true} />
       
       <ParallaxSection speed={0.4}>
-        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10">
           <motion.div
             ref={ref}
             initial={{ opacity: 0, y: 30 }}
@@ -125,7 +125,7 @@ export default function PortfolioSection() {
           >
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-shadow">
               <span className="text-secondary-white">My</span>{' '}
-              <span className="gradient-text">Portfolio</span>
+              <span className="gradient-text">Gallery</span>
             </h2>
             <p className="text-lg text-secondary-lightGray mx-auto">
               A showcase of AI-generated artworks, ComfyUI workflows, and Photoshop enhancements 
@@ -138,9 +138,10 @@ export default function PortfolioSection() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 lg:gap-10 xl:gap-12 max-w-7xl mx-auto justify-items-center"
+              className="w-full"
             >
-              {[...Array(6)].map((_, index) => (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 lg:gap-10 xl:gap-12 max-w-6xl mx-auto justify-items-center">
+                {[...Array(9)].map((_, index) => (
                 <div key={index} className="relative overflow-hidden rounded-2xl glass-effect">
                   <div className="aspect-[4/5] bg-gradient-to-br from-secondary-gray to-primary-darkGray animate-pulse">
                     <div className="absolute inset-0 bg-gradient-to-t from-primary-black/60 to-transparent"></div>
@@ -150,7 +151,8 @@ export default function PortfolioSection() {
                     </div>
                   </div>
                 </div>
-              ))}
+                ))}
+              </div>
             </motion.div>
           ) : error ? (
             <motion.div
@@ -176,9 +178,10 @@ export default function PortfolioSection() {
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : { opacity: 0 }}
               transition={{ duration: 0.6 }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 lg:gap-10 xl:gap-12 max-w-7xl mx-auto justify-items-center"
+              className="w-full"
             >
-              {portfolioItems.map((item, index) => (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 lg:gap-10 xl:gap-12 max-w-6xl mx-auto justify-items-center">
+                {portfolioItems.map((item, index) => (
                 <motion.div
                   key={item.id}
                   initial={{ opacity: 0, y: 20 }}
@@ -189,8 +192,7 @@ export default function PortfolioSection() {
                   className="group cursor-pointer"
                   style={{ transformPerspective: 1000 }}
                 >
-                  <HolographicEffect>
-                    <RippleEffect className="relative overflow-hidden rounded-2xl glass-effect hover:red-glow transition-all duration-300">
+                    <div className="relative overflow-hidden rounded-2xl bg-secondary-darkGray/20 backdrop-blur-sm border border-secondary-gray/30 transition-all duration-300">
                       <div className="aspect-[4/5] relative bg-gradient-to-br from-secondary-gray to-primary-darkGray">
                         <img 
                           src={item.image} 
@@ -243,10 +245,10 @@ export default function PortfolioSection() {
                           </div>
                         </div>
                       </div>
-                    </RippleEffect>
-                  </HolographicEffect>
+                    </div>
                 </motion.div>
-              ))}
+                ))}
+              </div>
             </motion.div>
           )}
 
