@@ -89,7 +89,7 @@ export default function PortfolioSection() {
           id: post.id,
           title: extractTitle(post.caption || ''),
           description: extractDescription(post.caption || ''),
-          image: post.media_url,
+          image: post.media_type === 'VIDEO' ? post.thumbnail_url || post.media_url : post.media_url,
           instagramUrl: post.permalink,
           timestamp: post.timestamp
         }));
