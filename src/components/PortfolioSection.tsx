@@ -77,7 +77,7 @@ export default function PortfolioSection() {
         setLoading(true);
         setError(null);
         
-        const response = await fetch('/api/instagram?limit=12');
+        const response = await fetch('/.netlify/functions/instagram');
         const data = await response.json();
         
         if (!response.ok) {
