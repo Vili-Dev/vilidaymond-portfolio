@@ -109,13 +109,13 @@ export default function PortfolioSection() {
 
 
   return (
-    <section id="portfolio" className="relative py-20 lg:py-32 flex flex-col items-center" style={{ marginTop: '50px', textAlign: 'center', justifyContent: 'center' }}>
+    <section id="portfolio" className="relative py-20 lg:py-32 flex flex-col items-center" style={{ marginTop: '50px', textAlign: 'center', justifyContent: 'center', alignItems: 'center' }}>
       <div className="absolute inset-0 bg-gradient-to-b from-primary-darkGray via-primary-black to-primary-darkGray"></div>
       
       <FogOverlay density={0.08} animated={true} />
       
       <ParallaxSection speed={0.4}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10 text-center justify-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10 text-center justify-center" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <motion.div
             ref={ref}
             initial={{ opacity: 0, y: 30 }}
