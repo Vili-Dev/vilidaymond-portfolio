@@ -94,7 +94,7 @@ export default function PortfolioSection() {
           timestamp: post.timestamp
         }));
         
-        setPortfolioItems(transformedItems);
+        setPortfolioItems(transformedItems.slice(0, 6));
         console.log('Portfolio items loaded:', transformedItems.length, transformedItems);
       } catch (err) {
         console.error('Error fetching Instagram posts:', err);
